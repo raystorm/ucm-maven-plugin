@@ -33,32 +33,23 @@ import org.apache.maven.plugins.annotations.Execute;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 
-/** Deploy a component to a server */
-@Mojo(name = "deploy" )
+/** Enable a deployed component on a server */
+@Mojo(name = "enable")
 //@Execute(goal="build", phase = LifecyclePhase.PACKAGE)
-public class DeployComponent extends AbstractServerAwareMojo
+public class EnableComponent extends AbstractServerAwareMojo
 {
 
   public void execute() throws MojoExecutionException
   {
     IdcServerDefinition server = getSelectedServer();
     
-    File componentZipFile = getComponentZipAsFile();
-
-    if (componentZipFile == null)
-    {
-      throw new MojoExecutionException( "Unable to determine appropriate "
-                                      + "component zip file from root project folder.");
-    }
-
     if (componentName == null)
     {
       throw new MojoExecutionException( "Unable to determine component name. "
                                       + "Does a zip file exist?");
     }
 
-    getLog().info("Deploying component " + componentName + " to " + server.getId()
-                 +" from zip: " + componentZipFile);
+    getLog().info("Enabling component "+componentName+" on " + server.getId());
 
     IdcClientManager manager = new IdcClientManager();
 
@@ -72,41 +63,15 @@ public class DeployComponent extends AbstractServerAwareMojo
 
       DataBinder binder = idcClient.createBinder();
 
-      // 1. GET_COMPONENT_INSTALL_FORM
-
-      binder.putLocal("IdcService", "GET_COMPONENT_INSTALL_FORM");
-      binder.putLocal("IDC_Id", server.getId());
-
-      try { binder.addFile("ComponentZipFile", componentZipFile); }
-      catch (IOException ioe)
-      {
-        throw new MojoExecutionException( "Error reading zip file: " 
-                                        + componentZipFile, ioe);
-      }
-
-      ServiceResponse response = idcClient.sendRequest(userContext, binder);
-
-      DataBinder responseBinder = response.getResponseAsBinder();
-
-      // 2. UPLOAD_NEW_COMPONENT
-
-      // pass through component location and name to next service
-      binder.putLocal("IdcService",    "UPLOAD_NEW_COMPONENT");
-      binder.putLocal("ComponentName", responseBinder.getLocal("ComponentName"));
-      binder.putLocal("location",      responseBinder.getLocal("location"));
-      // needed for 11g
-      binder.putLocal("componentDir",  responseBinder.getLocal("componentDir"));
-      binder.removeFile("ComponentZipFile");
-
-      response = idcClient.sendRequest(userContext, binder);
-
-      responseBinder = response.getResponseAsBinder();
-
-      // 3. ENABLE COMPONENT - moved to Separate goal
+      // ENABLE COMPONENT  ADMIN_TOGGLE_COMPONENTS
       
-      //user must manually call ucm:enable
+      binder.putLocal("IdcService", "ADMIN_TOGGLE_COMPONENTS");
+      binder.putLocal("isEnable",   "1");
       
-      // 4. Restart WCC - moved to Separate goals
+      binder.putLocal("IDC_Id", server.getAdminServer().getWlsServerName());
+      binder.putLocal("ComponentNames", componentName);
+
+      idcClient.sendRequest(userContext, binder);
     }
     catch (IdcClientException ice)
     { throw new MojoExecutionException(ice.getMessage()); }

@@ -45,11 +45,10 @@ abstract class AbstractComponentMojo extends AbstractMojo
    protected static final String manifestFileName = "manifest.hda";
 
   /**
-   * Name of the component.
+   *  Name of the component.
    *
-   * Determined name of the zip file. Can be specified or will auto detect
-   * from first component found in manifest.hda
-   *
+   *  Determined name of the zip file. Can be specified or will auto detect
+   *  from first component found in manifest.hda
    */
    @Parameter(property = "componentName")
   protected String componentName;
@@ -204,14 +203,19 @@ abstract class AbstractComponentMojo extends AbstractMojo
          if ( line.startsWith(componentNameKey) )
          {
            getLog().debug("Found component name row: " + line);
+           /* regex is overkill * /
            Pattern pattern = Pattern.compile(componentNameKey+"=(\\w+)");
-           Matcher matcher = pattern.matcher(line);
+           Matcher matcher = pattern.matcher(line); 
            if (matcher.find())
            {
              componentName = matcher.group(1);
              getLog().debug("Found component name in manifest: " + componentName);
              return componentName; 
            }
+           //*/
+           componentName = line.substring((componentNameKey+'=').length()).trim();
+           getLog().debug("Found component name in manifest: " + componentName);
+           return componentName; 
          }
          
          if ( line.equals("component") ) //next line is the path to the glue file 

@@ -81,11 +81,15 @@ public class BuildComponent extends AbstractComponentMojo
     File componentZipFile = new File(componentLocation);
 
     getLog().info("Saving " + componentZipFile.getName() + " with contents:");
-
+    
     try
     {
-      zipStream = new ZipOutputStream(new FileOutputStream(componentZipFile,
-                                                           false));
+       //Make sure the build directory exists
+       if ( null != componentZipFile.getParentFile() 
+         && !componentZipFile.getParentFile().exists() )
+       { componentZipFile.getParentFile().mkdirs(); }
+       zipStream = new ZipOutputStream(new FileOutputStream(componentZipFile,
+                                                            false));
     }
     catch (FileNotFoundException e)
     { throw new MojoExecutionException("Unable to open zip file for output", e); }
@@ -96,8 +100,11 @@ public class BuildComponent extends AbstractComponentMojo
       String fileSystemPath = i.next();
       String zipPath = zipListing.get(fileSystemPath);
       getLog().info("  " + zipPath);
+      
+      File path = new File(fileSystemPath);
+      if ( !path.exists() ) { continue; } //if path doesn't exist, skip it
 
-      try { addFileToZip(zipStream, new File(fileSystemPath), zipPath); }
+      try { addFileToZip(zipStream, path, zipPath); }
       catch (IOException e)
       {
         throw new MojoExecutionException("Unable to close stream for: "
@@ -130,7 +137,7 @@ public class BuildComponent extends AbstractComponentMojo
     if (!fileSystemPath.canRead())
     { throw new MojoExecutionException("file cannot be read: " + fileSystemPath); }
 
-    if (fileSystemPath.isDirectory())
+    if ( fileSystemPath.exists() && fileSystemPath.isDirectory() )
     { addFolderToZip(zipStream, fileSystemPath, zipPath); }
     else
     {
@@ -209,7 +216,7 @@ public class BuildComponent extends AbstractComponentMojo
    * @throws MojoExecutionException
    */
   private void addToZipList(Map<String, String> zipListing, DataObject manifestEntry)
-          throws MojoExecutionException
+            throws MojoExecutionException
   {
     String entryType = manifestEntry.get("entryType");
     String location  = manifestEntry.get("location");
@@ -220,26 +227,36 @@ public class BuildComponent extends AbstractComponentMojo
 
     String zipPrefix = "component/"+componentName+"/";
     String fileSystemLocation = location;
+    String zipLocation = zipPrefix + location;    
 
     if (entryType.equals("componentClasses"))
     { 
       getLog().debug("Classes Dir : " + classes);
-
+      
       if ( null == classes ) { classes = "target/classes/"; }
-
-      //classes = "component/"+componentName+"/"+classes;
       fileSystemLocation = classes;
     }
     
     if (entryType.equals("componentLib"))
-    { fileSystemLocation = libFolder; }
+    { 
+       fileSystemLocation = libFolder; 
+       
+       File libFile = new File(libFolder);
+       //if ( !libFile.exists() || libFile.listFiles().length == 0) { return; }
+       if ( !libFile.exists() ) { return; }
+    }
     
-    zipListing.put(fileSystemLocation, zipPrefix + location);
-
+    if (entryType.equals("images"))
+    { 
+       fileSystemLocation = "images/" + location;
+       zipLocation = fileSystemLocation;
+    }
+    
+    zipListing.put(fileSystemLocation, zipLocation);
+    
     if (entryType.equals("component"))
     {
       File componentHdaFile = new File(location);
-
       addComponentResourcesToZipList(zipListing, componentHdaFile);
     }
 

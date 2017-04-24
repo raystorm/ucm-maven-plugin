@@ -183,6 +183,10 @@ Planned Features for 1.0
 
 Command to generate a simple / blank Maven-UCM-Plugin project
 
+*improved package/version support*
+ability to automatically add the `ComponentName` and/or `ComponentName-Version` to
+`featureExtentions`.
+
 
 
 Additional Notes

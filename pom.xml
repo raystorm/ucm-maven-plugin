@@ -6,7 +6,7 @@
 
    <groupId>org.ucmtwine</groupId>
    <artifactId>ucm-maven-plugin</artifactId>
-   <version>0.0.6-SNAPSHOT</version>
+   <version>0.1.1-SNAPSHOT</version>
    <packaging>maven-plugin</packaging>
 
    <!-- TODO: should this be updated to WCC from UCM? -->
@@ -97,7 +97,8 @@
       <dependency>
         <groupId>org.twdata.maven</groupId>
         <artifactId>mojo-executor</artifactId>
-        <version>2.0.1</version>
+        <version>2.2.0</version>
+        <!-- <version>2.0.1</version> -->
         <!-- <version>1.5.2</version> -->
       </dependency>
       <dependency>
