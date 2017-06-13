@@ -1,10 +1,10 @@
 UCM Plugin for Maven
-================
+====================
 
 Build, deploy and manage Oracle UCM components directly from maven.
 
 Commands (Goals)
---------
+----------------
 
 ### build
 
@@ -174,14 +174,20 @@ Until this is up on Maven central, you need to install into your local repositor
   mvn install:install-file -DgroupId=org.ucmtwine -DartifactId=ucm-maven-plugin -Dpackaging=jar -Dversion=1.0.0-SNAPSHOT -Dfile=ucm-maven-plugin-1.0.0-SNAPSHOT.jar -DpomFile=pom.xml
   ```
 
-Planned Features for 1.0
-------------------------
+Planned Features
+----------------
 
 ### archetype-generate
 
 `mvn ucm:archetype-generate`
 
 Command to generate a simple / blank Maven-UCM-Plugin project
+
+### rename
+
+`mvn ucm:rename`
+
+Command to rename a Component. (change component Name, and file/Table names to match new component Name)
 
 *improved package/version support*
 ability to automatically add the `ComponentName` and/or `ComponentName-Version` to
@@ -202,7 +208,7 @@ can be found via the `help:describe` mojo.
   
   
   
--------
+-------------
 
 License (MIT)
 -------------

@@ -205,7 +205,7 @@ abstract class AbstractComponentMojo extends AbstractMojo
            getLog().debug("Found component name row: " + line);
            /* regex is overkill * /
            Pattern pattern = Pattern.compile(componentNameKey+"=(\\w+)");
-           Matcher matcher = pattern.matcher(line); 
+           Matcher matcher = pattern.matcher(line);
            if (matcher.find())
            {
              componentName = matcher.group(1);
