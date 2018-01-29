@@ -34,7 +34,7 @@ public class FileUpdateHelper
         
         final BufferedReader reader = new BufferedReader(new FileReader(hdaFile));
         final PrintWriter writer = new PrintWriter(new FileWriter(tempFile, false));
-        String line = null;
+        String line;
         
         //force post prefix =
         if ( !prefix.endsWith("=") ) { prefix = prefix+"="; }

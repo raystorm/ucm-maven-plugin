@@ -142,7 +142,7 @@ public class BuildComponent extends AbstractComponentMojo
         zipStream.putNextEntry(entry);
 
         final byte[] buf = new byte[BUFFER];
-        int num = 0;
+        int num;
         while ((num = in.read(buf)) > 0) { zipStream.write(buf, 0, num);  }
       }
       catch (final FileNotFoundException e)

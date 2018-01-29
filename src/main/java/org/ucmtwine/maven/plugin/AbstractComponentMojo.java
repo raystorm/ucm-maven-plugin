@@ -258,7 +258,9 @@ abstract class AbstractComponentMojo extends AbstractMojo
      catch (final IOException ioe)
      { getLog().error("Error opening the " + file.getPath() + " file.", ioe); }
      finally
-     { if (br != null) { try { br.close(); } catch (final IOException ingored) {} } }
+     { if (br != null) { try { br.close(); } catch (final IOException ignored) {
+       // empty catch
+     } } }
      
      return null; //not found
   }
@@ -301,13 +303,10 @@ abstract class AbstractComponentMojo extends AbstractMojo
 
     // TODO: fix hard coded encoding
     final HdaBinderSerializer serializer = new HdaBinderSerializer("UTF-8", new DataFactoryImpl());
-    DataBinder binder = null;
 
-    try { binder = serializer.parseBinder(new FileReader(manifestFile)); }
+    try { return serializer.parseBinder(new FileReader(manifestFile)); }
     catch (final Exception e)
     { throw new MojoExecutionException("Error opening" + manifestFile, e); }
-
-    return binder;
   }
 
 }

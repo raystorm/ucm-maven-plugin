@@ -94,8 +94,6 @@ public class DeployComponent extends AbstractServerAwareMojo
 
       response = idcClient.sendRequest(userContext, binder);
 
-      responseBinder = response.getResponseAsBinder();
-
       // 3. ENABLE COMPONENT - moved to Separate goal
       
       //user must manually call ucm:enable
