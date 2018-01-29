@@ -49,7 +49,7 @@ public class EnableComponent extends AbstractServerAwareMojo
       @SuppressWarnings("rawtypes") final IdcClient idcClient = manager.createClient(server.getUrl());
 
       final IdcContext userContext = new IdcContext(server.getUsername(),
-                                              server.getPassword());
+                                              server.getPassword().toCharArray());
 
       final DataBinder binder = idcClient.createBinder();
 
