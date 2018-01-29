@@ -86,21 +86,22 @@ public class BuildComponent extends AbstractComponentMojo
     catch (final FileNotFoundException e)
     { throw new MojoExecutionException("Unable to open zip file for output", e); }
 
-    for (final Iterator<String> i = zipListing.keySet().iterator(); i.hasNext();)
-    {
+    for (final String fileSystemPath : zipListing.keySet()) {
       //TODO: Add fix for Component Classes to use /target/classes
-      final String fileSystemPath = i.next();
       final String zipPath = zipListing.get(fileSystemPath);
       getLog().info("  " + zipPath);
-      
-      final File path = new File(fileSystemPath);
-      if ( !path.exists() ) { continue; } //if path doesn't exist, skip it
 
-      try { addFileToZip(zipStream, path, zipPath); }
-      catch (final IOException e)
-      {
+      final File path = new File(fileSystemPath);
+      if (!path.exists()) {
+        // if path doesn't exist, skip it
+        continue;
+      }
+
+      try {
+        addFileToZip(zipStream, path, zipPath);
+      } catch (final IOException e) {
         throw new MojoExecutionException("Unable to close stream for: "
-                                        + fileSystemPath, e);
+            + fileSystemPath, e);
       }
     }
 
