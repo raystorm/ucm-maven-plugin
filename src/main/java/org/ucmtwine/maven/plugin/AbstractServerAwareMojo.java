@@ -1,9 +1,9 @@
 package org.ucmtwine.maven.plugin;
 
-import java.util.List;
-
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Parameter;
+
+import java.util.List;
 
 /**
  * Extend this if you need your goal to be aware of the servers config and

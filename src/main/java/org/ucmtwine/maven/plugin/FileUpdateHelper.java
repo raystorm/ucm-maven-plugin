@@ -1,14 +1,13 @@
 package org.ucmtwine.maven.plugin;
 
+import org.apache.maven.plugin.MojoExecutionException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.String;
-
-import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  *  Helper class to contain the file hda file update method

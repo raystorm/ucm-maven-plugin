@@ -1,7 +1,5 @@
 package org.ucmtwine.maven.plugin;
 
-import java.lang.String;
-
 import org.apache.maven.AbstractMavenLifecycleParticipant;
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.execution.MavenSession;

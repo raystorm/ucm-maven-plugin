@@ -1,19 +1,9 @@
 package org.ucmtwine.maven.plugin;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import oracle.stellent.ridc.model.DataBinder;
 import oracle.stellent.ridc.model.DataResultSet;
 import oracle.stellent.ridc.model.impl.DataFactoryImpl;
 import oracle.stellent.ridc.model.serialize.HdaBinderSerializer;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.maven.execution.MavenSession;
@@ -23,6 +13,13 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
 
 /**
  * Extend this if you need your goal to be aware

@@ -1,8 +1,6 @@
 package org.ucmtwine.maven.plugin;
 
 
-import java.io.File;
-
 import org.apache.maven.plugins.annotations.Parameter;
 
 /**

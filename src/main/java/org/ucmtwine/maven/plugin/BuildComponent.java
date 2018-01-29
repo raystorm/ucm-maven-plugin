@@ -1,6 +1,14 @@
 package org.ucmtwine.maven.plugin;
 
-import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
+import oracle.stellent.ridc.model.DataObject;
+import oracle.stellent.ridc.model.DataResultSet;
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,22 +22,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import oracle.security.jps.internal.core.action.GetSecurityPropertyAction;
-import oracle.stellent.ridc.model.DataObject;
-import oracle.stellent.ridc.model.DataResultSet;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
-import org.apache.maven.model.Dependency;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Execute;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
 
 /**
  *  Build the component zip

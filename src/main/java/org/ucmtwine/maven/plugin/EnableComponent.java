@@ -16,21 +16,12 @@ package org.ucmtwine.maven.plugin;
  * limitations under the License.
  */
 
-import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
-
-import java.io.File;
-import java.io.IOException;
-
 import oracle.stellent.ridc.IdcClient;
 import oracle.stellent.ridc.IdcClientException;
 import oracle.stellent.ridc.IdcClientManager;
 import oracle.stellent.ridc.IdcContext;
 import oracle.stellent.ridc.model.DataBinder;
-import oracle.stellent.ridc.protocol.ServiceResponse;
-
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Execute;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /** Enable a deployed component on a server */
