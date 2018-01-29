@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
-   <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
    <groupId>org.ucmtwine</groupId>
    <artifactId>ucm-maven-plugin</artifactId>
@@ -30,12 +31,32 @@
    </scm>
    -->
 
+    <repositories>
+        <repository>
+            <id>bintray-jhult-maven</id>
+            <name>bintray-jhult-maven</name>
+            <url>https://dl.bintray.com/jhult/maven</url>
+        </repository>
+        <repository>
+            <id>bintray</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>bintray</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com</url>
+        </pluginRepository>
+    </pluginRepositories>
+
    <build>      
      <plugins>
        <plugin>
          <groupId>org.apache.maven.plugins</groupId>
          <artifactId>maven-plugin-plugin</artifactId>
-         <version>3.0</version>
+         <version>3.5.1</version>
          <!-- <version>2.5.1</version> -->
          <configuration>
            <goalPrefix>ucm</goalPrefix>
@@ -136,15 +157,9 @@
       </dependency>
 
       <dependency>
-        <groupId>com.oracle.wcc</groupId>
+         <groupId>oracle.ucm</groupId>
         <artifactId>ridc</artifactId>
-        <version>[11.1.1,12.0.0.0)</version>
-      </dependency>
-      <!-- TODO: should this be updated to: 4.4.1 for RIDC? -->
-      <dependency>
-        <groupId>commons-httpclient</groupId>
-        <artifactId>commons-httpclient</artifactId>
-        <version>3.1</version>
+         <version>12.2.2.0.0</version>
       </dependency>
 
       <!-- Used for post Deploy WCC restart
