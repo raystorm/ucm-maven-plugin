@@ -10,11 +10,11 @@ import org.apache.maven.plugins.annotations.Mojo;
  *  @version Nov 18, 2016
  */
 @Mojo(name = "restart" )
-public class ResstartWLSServer extends AbstractWLSServerControlMojo
+public class RestartWLSServer extends AbstractWLSServerControlMojo
 {
 
    /** Default Constructor - Does Nothing */
-   public ResstartWLSServer() { }
+   public RestartWLSServer() { }
 
    /* (non-Javadoc)
     * @see org.apache.maven.plugin.Mojo#execute()
