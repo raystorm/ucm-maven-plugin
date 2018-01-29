@@ -90,10 +90,7 @@ public class UpdateClasspath extends AbstractLibMojo
         }
      }
 
-     String finalClassPath = classpath.toString();
-
-     final String libClasspath = appendLibrariesToClasspath(classPathRoot, classpath);
-     finalClassPath = libClasspath;
+     final String finalClassPath = appendLibrariesToClasspath(classPathRoot, classpath);
 
      // TODO: need only update classpath if it has changed!
      writeClassPath(finalClassPath);
@@ -139,7 +136,7 @@ public class UpdateClasspath extends AbstractLibMojo
   /**
    * Writes the classpath to the hda file.
    *
-   * @param classPathItems
+   * @param classpath
    * @throws MojoExecutionException
    */
   private void writeClassPath(final String classpath) throws MojoExecutionException
