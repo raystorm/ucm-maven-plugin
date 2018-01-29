@@ -138,17 +138,11 @@ Until this is up on Maven central, you need to install into your local repositor
 
 *Requires Maven on your PATH*
 
-1. Download [RIDC](http://www.oracle.com/technetwork/middleware/webcenter/content/downloads/index.html) 11.1.1
-2. Install RIDC into your local maven repo
-3. Download/Generate wlfullclient.jar from WebLogic Server. 
+1. Download/Generate wlfullclient.jar from WebLogic Server. 
    http://docs.oracle.com/cd/E23943_01/web.1111/e13717/jarbuilder.htm#SACLT239
-4. Install wlfullclient.jar 
+2. Install wlfullclient.jar 
    **NOTE:** The dependency is required, when building this plugin.  
              The dependency is required/used for controlling the WCC server lifecycle.
-
-  ```
-  mvn install:install-file -DgroupId=com.oracle.ucm -DartifactId=ridc -Dpackaging=jar -Dversion=11.1.1 -Dfile=oracle.ucm.ridc-11.1.1.jar -DgeneratePom=true
-  ```
 
 1. Download ucm-maven-plugin-1.0.0-SNAPSHOT.jar from the downloads section
 1. Download the pom.xml from github source
