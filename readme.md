@@ -10,26 +10,20 @@ Commands (Goals)
 
 `mvn ucm:build`
 
-Builds a component zip file into the default output folder.
-can be overridden with <componentLocation>,
-or <componentFileName> to change the file name
+Builds a component zip file into the default output folder. This can be overridden with <componentLocation>, or <componentFileName> to change the file name.
 
 ### deploy
 
 `mvn ucm:deploy -Dserver=dev`
 
-Builds and deploys the component zip to the server id in your configuration.
-If no server is specified, the first server defined is used.
+Builds and deploys the component zip to the server id in your configuration. If no server is specified, the first server defined is used.
 
-**Note:** Deploy does not automatically restart wcc. That is left up the user
-so that multiple deploys can be run-before a restart,
- or avoided if a restart isn't deemed necessary.
+**Note:** Deploy does not automatically restart wcc. That is left up the user so that multiple deploys can be run-before a restart, or avoided if a restart isn't deemed necessary.
 
 
 ### WCC Server Lifecycle
 
-The plugin can query and control the basic lifecycle of WCC  
-(when configured as a managed WLS instance with NodeManager.)
+The plugin can query and control the basic lifecycle of WCC (when configured as a managed WLS instance with NodeManager.)
 
 **Goals:**  
   
@@ -50,20 +44,15 @@ Updates your component .hda classpath to reflect all maven source directories.
 
 `mvn ucm:lib`
 
-Updates your component .hda lib to reflect all maven dependencies.
-Defaults to using the `$COMPONENT_DIR/lib/` folder,
-but the lib folder can be configured with `<componentLibFolder>` config.
-If configured the config must match the .hda file `componentLib` setting.
+Updates your component .hda lib to reflect all maven dependencies. Defaults to using the `$COMPONENT_DIR/lib/` folder, but the lib folder can be configured with `<componentLibFolder>` config. If configured the config must match the .hda file `componentLib` setting.
 
-The lib files are assumed to be in the ${project.build.Directory}/Lib folder.
-However, this is configurable with the <componentLibFolder> element.
+The lib files are assumed to be in the ${project.build.Directory}/lib folder. However, this is configurable with the <componentLibFolder> element.
 
 ### update-version
 
 `mvn ucm:update-version`
 
-This will increment your maven version and set your components version to match 
-
+This will increment your maven version and set your components version to match.
 
 Configuration
 -------------
@@ -72,14 +61,9 @@ In your projects pom.xml:
 
 The plugin defines its own Lifecycle/Packaging **wcc**
 
-To take full advantage of the plugin add `<packaging>wcc</packaging>`
-to your *pom.xml*.
+To take full advantage of the plugin add `<packaging>wcc</packaging>` to your *pom.xml*.
 
-Setting that will automagically bind the plugin goals to the lifecycle,
-so for example `mvn package` will call
-`ucm:classpath`, `ucm:lib`, and `ucm:build` in order as part
-of the normal build process
-
+Setting that will automagically bind the plugin goals to the lifecycle, so for example `mvn package` will call `ucm:classpath`, `ucm:lib`, and `ucm:build` in order as part of the normal build process.
 
 ```xml
 <plugin>
@@ -190,10 +174,7 @@ Command to generate a simple / blank Maven-UCM-Plugin project
 Command to rename a Component. (change component Name, and file/Table names to match new component Name)
 
 *improved package/version support*
-ability to automatically add the `ComponentName` and/or `ComponentName-Version` to
-`featureExtentions`.
-
-
+ability to automatically add the `ComponentName` and/or `ComponentName-Version` to `featureExtentions`.
 
 Additional Notes
 ----------------
