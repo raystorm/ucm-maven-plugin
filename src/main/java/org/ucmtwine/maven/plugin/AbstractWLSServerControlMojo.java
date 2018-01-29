@@ -72,9 +72,9 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
       final Hashtable env = new Hashtable();
       
       String user = adminServer.getUsername();
-      final String pass = adminServer.getPassword();
+      String pass = adminServer.getPassword();
       if (null == user) { user = server.getUsername(); }
-      if (null == pass) { user = server.getPassword(); }
+      if (null == pass) { pass = server.getPassword(); }
       
       env.put(Context.SECURITY_PRINCIPAL, user);
       env.put(Context.SECURITY_CREDENTIALS, pass);
