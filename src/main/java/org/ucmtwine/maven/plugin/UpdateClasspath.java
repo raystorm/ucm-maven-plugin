@@ -60,8 +60,7 @@ public class UpdateClasspath extends AbstractLibMojo
    */
   private boolean overwriteClasspath;
 
-  public void execute() throws MojoExecutionException, MojoFailureException
-  {
+  public void execute() throws MojoExecutionException {
      // find componentName
      determineComponentName();
 

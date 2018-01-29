@@ -51,8 +51,7 @@ public class BuildComponent extends AbstractComponentMojo
    */
   private String excludeFiles;
 
-  public void execute() throws MojoExecutionException, MojoFailureException
-  {
+  public void execute() throws MojoExecutionException {
     final DataResultSet manifestRs = getResultSetFromHda(getManifestFile(), "Manifest");
 
     final ZipOutputStream zipStream;

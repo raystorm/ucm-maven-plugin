@@ -19,7 +19,6 @@ public class ResstartWLSServer extends AbstractWLSServerControlMojo
    /* (non-Javadoc)
     * @see org.apache.maven.plugin.Mojo#execute()
     */
-   public void execute() throws MojoExecutionException, MojoFailureException
-   { super.restartServer(); }
+   public void execute() { super.restartServer(); }
 
 }

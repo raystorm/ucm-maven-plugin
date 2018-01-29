@@ -19,7 +19,6 @@ public class StopWLSServer extends AbstractWLSServerControlMojo
    /* (non-Javadoc)
     * @see org.apache.maven.plugin.Mojo#execute()
     */
-   public void execute() throws MojoExecutionException, MojoFailureException
-   { super.stopServer(); }
+   public void execute() { super.stopServer(); }
 
 }

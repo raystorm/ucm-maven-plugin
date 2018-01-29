@@ -24,8 +24,7 @@ public class InitMojo extends AbstractComponentMojo
    /* (non-Javadoc)
     * @see org.apache.maven.plugin.Mojo#execute()
     */
-   public void execute() throws MojoExecutionException, MojoFailureException
-   {
+   public void execute() throws MojoExecutionException {
       getLog().debug("Initializing Ucm-Maven-Plugin");
 
       determineComponentName();

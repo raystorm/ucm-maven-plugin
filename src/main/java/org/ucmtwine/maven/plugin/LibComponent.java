@@ -27,8 +27,7 @@ public class LibComponent extends AbstractLibMojo
    @Parameter(defaultValue="${project.build.directory}/lib")
    private String outputDirectory;
 
-   public void execute() throws MojoExecutionException, MojoFailureException
-   {
+   public void execute() throws MojoExecutionException {
      //String libFolder = getLibFolder();
      getLog().debug("Lib Folder: " + libFolder);
 

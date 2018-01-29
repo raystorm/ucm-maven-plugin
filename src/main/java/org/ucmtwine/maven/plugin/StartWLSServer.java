@@ -19,7 +19,6 @@ public class StartWLSServer extends AbstractWLSServerControlMojo
    /* (non-Javadoc)
     * @see org.apache.maven.plugin.Mojo#execute()
     */
-   public void execute() throws MojoExecutionException, MojoFailureException
-   { super.startServer(); }
+   public void execute() { super.startServer(); }
 
 }

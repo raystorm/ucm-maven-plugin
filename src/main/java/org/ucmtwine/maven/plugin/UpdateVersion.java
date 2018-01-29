@@ -52,8 +52,7 @@ public class UpdateVersion extends AbstractComponentMojo
    *  Update manifest.hda "CreateDate" w/ timestamp
    *         (Format "M/d/yy h:mm aa" (EG: 5/2/16 2:16 PM) )
    */
-  public void execute() throws MojoExecutionException, MojoFailureException
-  {
+  public void execute() throws MojoExecutionException {
      // find componentName
      determineComponentName();
      

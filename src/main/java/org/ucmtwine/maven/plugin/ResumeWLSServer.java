@@ -20,7 +20,6 @@ public class ResumeWLSServer extends AbstractWLSServerControlMojo
    /* (non-Javadoc)
     * @see org.apache.maven.plugin.Mojo#execute()
     */
-   public void execute() throws MojoExecutionException, MojoFailureException
-   { super.resumeServer(); }
+   public void execute() { super.resumeServer(); }
 
 }
