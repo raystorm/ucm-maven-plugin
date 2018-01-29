@@ -36,7 +36,7 @@ public class AdminServerDefinition
      return port; 
   }
 
-  public void setPort(String port) { this.port = port; }
+  public void setPort(final String port) { this.port = port; }
 
   public String getHostname() 
   {
@@ -44,7 +44,7 @@ public class AdminServerDefinition
      return hostname; 
   }
   
-  public void setHostname(String hostname) { this.hostname = hostname; }
+  public void setHostname(final String hostname) { this.hostname = hostname; }
 
   public String getServerName() 
   {
@@ -52,7 +52,7 @@ public class AdminServerDefinition
      return serverName; 
   }
 
-  public void setServerName(String serverName) { this.serverName = serverName; }
+  public void setServerName(final String serverName) { this.serverName = serverName; }
 
   public String getUsername() 
   {
@@ -60,7 +60,7 @@ public class AdminServerDefinition
      return username; 
   }
 
-  public void setUsername(String username) { this.username = username; }
+  public void setUsername(final String username) { this.username = username; }
 
   public String getPassword() 
   { 
@@ -68,7 +68,7 @@ public class AdminServerDefinition
      return password; 
   }
 
-  public void setPassword(String password) { this.password = password; }
+  public void setPassword(final String password) { this.password = password; }
 
   public String getWlsServerName() 
   { 
@@ -76,8 +76,8 @@ public class AdminServerDefinition
      return wlsServerName; 
   }
 
-  public void setWlsServerName(String wlsName) { this.wlsServerName = wlsName; }
+  public void setWlsServerName(final String wlsName) { this.wlsServerName = wlsName; }
   
-  public void setParentIdcServerDefinition(IdcServerDefinition parent)
+  public void setParentIdcServerDefinition(final IdcServerDefinition parent)
   { this.parent = parent; }
 }

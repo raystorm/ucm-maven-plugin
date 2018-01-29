@@ -64,13 +64,13 @@ public class UpdateVersion extends AbstractComponentMojo
                  executionEnvironment(project, session, pluginManager));
      // @formatter:on
      
-     Properties props = project.getProperties();
-     StringBuilder verbuilder = new StringBuilder(4);
+     final Properties props = project.getProperties();
+     final StringBuilder verbuilder = new StringBuilder(4);
      verbuilder.append(props.getProperty("parsedVersion.majorVersion")).append(".")
                .append(props.getProperty("parsedVersion.minorVersion")).append(".")
                .append(props.getProperty("parsedVersion.nextIncrementalVersion"))
                .append("-").append(props.getProperty("parsedVersion.qualifier"));
-    String nextVersion = verbuilder.toString(); 
+    final String nextVersion = verbuilder.toString();
      
      /* increment current version in pom */
      // @formatter:off
@@ -90,17 +90,17 @@ public class UpdateVersion extends AbstractComponentMojo
      version = nextVersion.replace(".", "_");
      getLog().info("Synchronizing version to: " + version);
 
-     File componentHDA = new File(componentName+".hda");
+     final File componentHDA = new File(componentName+".hda");
      
      try { replaceLine("version", version, componentHDA); }
-     catch(IOException ioe)
+     catch(final IOException ioe)
      { getLog().warn("Error Updating Component Version.", ioe); }
      
-     File manifest = getManifestFile();
-     SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy h:mm aa");
-     String createDate = sdf.format(new Date());
+     final File manifest = getManifestFile();
+     final SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy h:mm aa");
+     final String createDate = sdf.format(new Date());
      try { replaceLine("CreateDate", createDate, manifest); }
-     catch(IOException ioe)
+     catch(final IOException ioe)
      { getLog().warn("Error Updating Component Create Date.", ioe); }
   }
   

@@ -53,14 +53,14 @@ public class BuildComponent extends AbstractComponentMojo
 
   public void execute() throws MojoExecutionException, MojoFailureException
   {
-    DataResultSet manifestRs = getResultSetFromHda(getManifestFile(), "Manifest");
+    final DataResultSet manifestRs = getResultSetFromHda(getManifestFile(), "Manifest");
 
-    ZipOutputStream zipStream;
+    final ZipOutputStream zipStream;
 
-    Map<String, String> zipListing = new TreeMap<String, String>();
+    final Map<String, String> zipListing = new TreeMap<String, String>();
 
     zipListing.put("manifest.hda", "manifest.hda");
-    for (DataObject row : manifestRs.getRows()) { addToZipList(zipListing, row); }
+    for (final DataObject row : manifestRs.getRows()) { addToZipList(zipListing, row); }
 
     if (componentName == null)
     {
@@ -70,7 +70,7 @@ public class BuildComponent extends AbstractComponentMojo
 
     //TODO: adjust this to build in the project.build.directory and/or configured location
     //File componentZipFile = new File(componentName + ".zip");
-    File componentZipFile = new File(componentLocation);
+    final File componentZipFile = new File(componentLocation);
 
     getLog().info("Saving " + componentZipFile.getName() + " with contents:");
     
@@ -83,21 +83,21 @@ public class BuildComponent extends AbstractComponentMojo
        zipStream = new ZipOutputStream(new FileOutputStream(componentZipFile,
                                                             false));
     }
-    catch (FileNotFoundException e)
+    catch (final FileNotFoundException e)
     { throw new MojoExecutionException("Unable to open zip file for output", e); }
 
-    for (Iterator<String> i = zipListing.keySet().iterator(); i.hasNext();)
+    for (final Iterator<String> i = zipListing.keySet().iterator(); i.hasNext();)
     {
       //TODO: Add fix for Component Classes to use /target/classes
-      String fileSystemPath = i.next();
-      String zipPath = zipListing.get(fileSystemPath);
+      final String fileSystemPath = i.next();
+      final String zipPath = zipListing.get(fileSystemPath);
       getLog().info("  " + zipPath);
       
-      File path = new File(fileSystemPath);
+      final File path = new File(fileSystemPath);
       if ( !path.exists() ) { continue; } //if path doesn't exist, skip it
 
       try { addFileToZip(zipStream, path, zipPath); }
-      catch (IOException e)
+      catch (final IOException e)
       {
         throw new MojoExecutionException("Unable to close stream for: "
                                         + fileSystemPath, e);
@@ -105,11 +105,11 @@ public class BuildComponent extends AbstractComponentMojo
     }
 
     try { zipStream.close(); }
-    catch (IOException e)
+    catch (final IOException e)
     { throw new MojoExecutionException("Unable to close zip file", e); }
     
     //we've built the component now add it to the project for upstream
-    Artifact artifact = project.getArtifact();
+    final Artifact artifact = project.getArtifact();
     artifact.setFile(componentZipFile);
   }
 
@@ -122,8 +122,8 @@ public class BuildComponent extends AbstractComponentMojo
    * @throws MojoExecutionException
    * @throws IOException
    */
-  private void addFileToZip(ZipOutputStream zipStream, File fileSystemPath,
-                            String zipPath)
+  private void addFileToZip(final ZipOutputStream zipStream, final File fileSystemPath,
+                            final String zipPath)
           throws MojoExecutionException, IOException
   {
     if (!fileSystemPath.canRead())
@@ -138,16 +138,16 @@ public class BuildComponent extends AbstractComponentMojo
       {
         in = new FileInputStream(fileSystemPath);
 
-        ZipEntry entry = new ZipEntry(zipPath);
+        final ZipEntry entry = new ZipEntry(zipPath);
         zipStream.putNextEntry(entry);
 
-        byte[] buf = new byte[BUFFER];
+        final byte[] buf = new byte[BUFFER];
         int num = 0;
         while ((num = in.read(buf)) > 0) { zipStream.write(buf, 0, num);  }
       }
-      catch (FileNotFoundException e)
+      catch (final FileNotFoundException e)
       { throw new MojoExecutionException("file not found: " + fileSystemPath); }
-      catch (IOException e)
+      catch (final IOException e)
       {
         throw new MojoExecutionException("error writing to zip: "
                                         + fileSystemPath);
@@ -160,7 +160,7 @@ public class BuildComponent extends AbstractComponentMojo
     }
   }
 
-  private void addFolderToZip(ZipOutputStream zipStream, File fileSystemPath,
+  private void addFolderToZip(final ZipOutputStream zipStream, final File fileSystemPath,
                               String zipPath)
           throws MojoExecutionException, IOException
   {
@@ -170,11 +170,11 @@ public class BuildComponent extends AbstractComponentMojo
 
     // It is also possible to filter the list of returned files.
     // This example does not return any files that start with `.'.
-    FilenameFilter filter = getFileFilter();
+    final FilenameFilter filter = getFileFilter();
 
-    for (File entry : fileSystemPath.listFiles(filter))
+    for (final File entry : fileSystemPath.listFiles(filter))
     {
-      String newZipPath = zipPath + "/" + entry.getName();
+      final String newZipPath = zipPath + "/" + entry.getName();
       if (entry.isDirectory()) { addFolderToZip(zipStream, entry, newZipPath); }
       else { addFileToZip(zipStream, entry, newZipPath); }
     }
@@ -194,7 +194,7 @@ public class BuildComponent extends AbstractComponentMojo
     }
     return new FilenameFilter()
     {
-      public boolean accept(File dir, String name)
+      public boolean accept(final File dir, final String name)
       { return !name.matches(excludeFiles); }
     };
   }
@@ -207,17 +207,17 @@ public class BuildComponent extends AbstractComponentMojo
    * @param manifestEntry
    * @throws MojoExecutionException
    */
-  private void addToZipList(Map<String, String> zipListing, DataObject manifestEntry)
+  private void addToZipList(final Map<String, String> zipListing, final DataObject manifestEntry)
             throws MojoExecutionException
   {
-    String entryType = manifestEntry.get("entryType");
+    final String entryType = manifestEntry.get("entryType");
     String location  = manifestEntry.get("location");
 
     // remove component dir prefix
     if (location.startsWith(componentName))
     { location = location.replaceFirst(componentName+"/", ""); }
 
-    String zipPrefix = "component/"+componentName+"/";
+    final String zipPrefix = "component/"+componentName+"/";
     String fileSystemLocation = location;
     String zipLocation = zipPrefix + location;    
 
@@ -233,7 +233,7 @@ public class BuildComponent extends AbstractComponentMojo
     { 
        fileSystemLocation = libFolder; 
        
-       File libFile = new File(libFolder);
+       final File libFile = new File(libFolder);
        //if ( !libFile.exists() || libFile.listFiles().length == 0) { return; }
        if ( !libFile.exists() ) { return; }
     }
@@ -248,7 +248,7 @@ public class BuildComponent extends AbstractComponentMojo
     
     if (entryType.equals("component"))
     {
-      File componentHdaFile = new File(location);
+      final File componentHdaFile = new File(location);
       addComponentResourcesToZipList(zipListing, componentHdaFile);
     }
 
@@ -261,31 +261,31 @@ public class BuildComponent extends AbstractComponentMojo
    * @param componentHdaFile
    * @throws MojoExecutionException
    */
-  private void addComponentResourcesToZipList(Map<String, String> zipListing,
-                                              File componentHdaFile)
+  private void addComponentResourcesToZipList(final Map<String, String> zipListing,
+                                              final File componentHdaFile)
           throws MojoExecutionException
   {
-    String componentName = componentHdaFile.getName().replaceAll(".hda", "");
+    final String componentName = componentHdaFile.getName().replaceAll(".hda", "");
 
     // if component name not set yet, set it.
     if (this.componentName == null) { this.componentName = componentName; }
 
-    String baseZipPath = "component/" + componentName + "/";
+    final String baseZipPath = "component/" + componentName + "/";
 
     // read ResourceDefinition from hda file.
-    DataResultSet componentResources = getResultSetFromHda(componentHdaFile,
+    final DataResultSet componentResources = getResultSetFromHda(componentHdaFile,
                                                            "ResourceDefinition");
 
-    for (DataObject resourceRow : componentResources.getRows())
+    for (final DataObject resourceRow : componentResources.getRows())
     {
-      String type = resourceRow.get("type");
-      String fileName = resourceRow.get("filename");
+      final String type = resourceRow.get("type");
+      final String fileName = resourceRow.get("filename");
 
       // template entries have multiple files
       // so they need to be included by folder.
       if (type != null && type.equals("template"))
       {
-        String templateFolder = new File(fileName).getParent();
+        final String templateFolder = new File(fileName).getParent();
         zipListing.put(templateFolder, baseZipPath + templateFolder);
       }
       else { zipListing.put(fileName, baseZipPath + fileName); }

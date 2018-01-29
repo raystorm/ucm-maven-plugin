@@ -37,7 +37,7 @@ public abstract class AbstractServerAwareMojo extends AbstractComponentMojo
     // use specified server
     if (requestedServer != null && requestedServer.length() > 0) 
     {
-      for (IdcServerDefinition s : servers) 
+      for (final IdcServerDefinition s : servers)
       {
         if (s.getId().equalsIgnoreCase(requestedServer)) 
         {

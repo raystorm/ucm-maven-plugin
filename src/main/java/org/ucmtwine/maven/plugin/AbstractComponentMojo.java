@@ -143,7 +143,7 @@ abstract class AbstractComponentMojo extends AbstractMojo
     if ( null == componentName || "".equals(componentName.trim()) )
     {
       // 2. manifest.hda ((Optionally) -> ComponentName.hda) -> ComponentName=XXXX
-      File file = new File(manifestFileName);
+      final File file = new File(manifestFileName);
       
       componentName = processHDAFile(file);
       getLog().debug("ComponentName is: " + componentName);
@@ -161,17 +161,17 @@ abstract class AbstractComponentMojo extends AbstractMojo
       // 3. first non manifest.hda file
 
       // find all .hda files in base folder
-      FilenameFilter filter =
+      final FilenameFilter filter =
               new FilenameFilter()
                   {
-                     public boolean accept(File folder, String name)
+                     public boolean accept(final File folder, final String name)
                      {
                         return name.endsWith(".hda")
                             && !name.equals(manifestFileName);
                      }
                   };
 
-      File files[] = baseDir.listFiles(filter);
+      final File[] files = baseDir.listFiles(filter);
 
       //TODO: iterate through and confirm that the .hda is in fact a component hda.
 
@@ -184,7 +184,7 @@ abstract class AbstractComponentMojo extends AbstractMojo
     }
   }
   
-  private String processHDAFile(File file)
+  private String processHDAFile(final File file)
   {
      getLog().debug("processing hda file: " + file.getAbsolutePath());
 
@@ -217,13 +217,13 @@ abstract class AbstractComponentMojo extends AbstractMojo
          
          if ( line.equals("component") ) //next line is the path to the glue file 
          {
-            String componentHDAPath = br.readLine();
+            final String componentHDAPath = br.readLine();
             getLog().debug("glue file path:" + componentHDAPath); 
             File glueFile = new File(componentHDAPath);
             
             if ( !glueFile.exists() )
             {  
-               File prefixedGlueFile = 
+               final File prefixedGlueFile =
                             new File("component"+File.separator+glueFile.getPath());
                
                if ( !prefixedGlueFile.exists() )
@@ -253,12 +253,12 @@ abstract class AbstractComponentMojo extends AbstractMojo
          }
        }
      }
-     catch (FileNotFoundException fne)
+     catch (final FileNotFoundException fne)
      { getLog().error("Unable to find the " + file.getPath(), fne); }
-     catch (IOException ioe)
+     catch (final IOException ioe)
      { getLog().error("Error opening the " + file.getPath() + " file.", ioe); }
      finally
-     { if (br != null) { try { br.close(); } catch (IOException ingored) {} } }
+     { if (br != null) { try { br.close(); } catch (final IOException ingored) {} } }
      
      return null; //not found
   }
@@ -271,12 +271,12 @@ abstract class AbstractComponentMojo extends AbstractMojo
    * @return
    * @throws MojoExecutionException
    */
-   protected DataResultSet getResultSetFromHda(File manifestFile, String rsName)
+   protected DataResultSet getResultSetFromHda(final File manifestFile, final String rsName)
              throws MojoExecutionException
    {
-      DataBinder manifest = getBinderFromHda(manifestFile);
+      final DataBinder manifest = getBinderFromHda(manifestFile);
    
-      DataResultSet manifestRs = manifest.getResultSet(rsName);
+      final DataResultSet manifestRs = manifest.getResultSet(rsName);
    
       if (manifestRs == null)
       {
@@ -294,17 +294,17 @@ abstract class AbstractComponentMojo extends AbstractMojo
    * @return
    * @throws MojoExecutionException
    */
-  private DataBinder getBinderFromHda(File manifestFile) throws MojoExecutionException
+  private DataBinder getBinderFromHda(final File manifestFile) throws MojoExecutionException
   {
     if (manifestFile == null || !manifestFile.exists())
     { throw new MojoExecutionException("File "+manifestFile+" does not exist"); }
 
     // TODO: fix hard coded encoding
-    HdaBinderSerializer serializer = new HdaBinderSerializer("UTF-8", new DataFactoryImpl());
+    final HdaBinderSerializer serializer = new HdaBinderSerializer("UTF-8", new DataFactoryImpl());
     DataBinder binder = null;
 
     try { binder = serializer.parseBinder(new FileReader(manifestFile)); }
-    catch (Exception e)
+    catch (final Exception e)
     { throw new MojoExecutionException("Error opening" + manifestFile, e); }
 
     return binder;

@@ -36,9 +36,9 @@ public class DeployComponent extends AbstractServerAwareMojo
 
   public void execute() throws MojoExecutionException
   {
-    IdcServerDefinition server = getSelectedServer();
+    final IdcServerDefinition server = getSelectedServer();
     
-    File componentZipFile = getComponentZipAsFile();
+    final File componentZipFile = getComponentZipAsFile();
 
     if (componentZipFile == null)
     {
@@ -55,17 +55,16 @@ public class DeployComponent extends AbstractServerAwareMojo
     getLog().info("Deploying component " + componentName + " to " + server.getId()
                  +" from zip: " + componentZipFile);
 
-    IdcClientManager manager = new IdcClientManager();
+    final IdcClientManager manager = new IdcClientManager();
 
     try
     {
-      @SuppressWarnings("rawtypes")
-      IdcClient idcClient = manager.createClient(server.getUrl());
+      @SuppressWarnings("rawtypes") final IdcClient idcClient = manager.createClient(server.getUrl());
 
-      IdcContext userContext = new IdcContext(server.getUsername(), 
+      final IdcContext userContext = new IdcContext(server.getUsername(),
                                               server.getPassword());
 
-      DataBinder binder = idcClient.createBinder();
+      final DataBinder binder = idcClient.createBinder();
 
       // 1. GET_COMPONENT_INSTALL_FORM
 
@@ -73,7 +72,7 @@ public class DeployComponent extends AbstractServerAwareMojo
       binder.putLocal("IDC_Id", server.getId());
 
       try { binder.addFile("ComponentZipFile", componentZipFile); }
-      catch (IOException ioe)
+      catch (final IOException ioe)
       {
         throw new MojoExecutionException( "Error reading zip file: " 
                                         + componentZipFile, ioe);
@@ -103,7 +102,7 @@ public class DeployComponent extends AbstractServerAwareMojo
       
       // 4. Restart WCC - moved to Separate goals
     }
-    catch (IdcClientException ice)
+    catch (final IdcClientException ice)
     { throw new MojoExecutionException(ice.getMessage()); }
   }
 }

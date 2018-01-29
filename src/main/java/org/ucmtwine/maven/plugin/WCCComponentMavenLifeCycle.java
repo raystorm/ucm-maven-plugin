@@ -18,7 +18,7 @@ public class WCCComponentMavenLifeCycle
    public WCCComponentMavenLifeCycle() { }
 
    @Override
-   public void afterProjectsRead(MavenSession session)
+   public void afterProjectsRead(final MavenSession session)
          throws MavenExecutionException
    {
       // TODO Auto-generated method stub
@@ -26,7 +26,7 @@ public class WCCComponentMavenLifeCycle
    }
 
    @Override
-   public void afterSessionStart(MavenSession session)
+   public void afterSessionStart(final MavenSession session)
          throws MavenExecutionException
    {
       // TODO Auto-generated method stub

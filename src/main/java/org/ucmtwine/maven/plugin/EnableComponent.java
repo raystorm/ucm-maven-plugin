@@ -32,7 +32,7 @@ public class EnableComponent extends AbstractServerAwareMojo
 
   public void execute() throws MojoExecutionException
   {
-    IdcServerDefinition server = getSelectedServer();
+    final IdcServerDefinition server = getSelectedServer();
     
     if (componentName == null)
     {
@@ -42,17 +42,16 @@ public class EnableComponent extends AbstractServerAwareMojo
 
     getLog().info("Enabling component "+componentName+" on " + server.getId());
 
-    IdcClientManager manager = new IdcClientManager();
+    final IdcClientManager manager = new IdcClientManager();
 
     try
     {
-      @SuppressWarnings("rawtypes")
-      IdcClient idcClient = manager.createClient(server.getUrl());
+      @SuppressWarnings("rawtypes") final IdcClient idcClient = manager.createClient(server.getUrl());
 
-      IdcContext userContext = new IdcContext(server.getUsername(), 
+      final IdcContext userContext = new IdcContext(server.getUsername(),
                                               server.getPassword());
 
-      DataBinder binder = idcClient.createBinder();
+      final DataBinder binder = idcClient.createBinder();
 
       // ENABLE COMPONENT  ADMIN_TOGGLE_COMPONENTS
       
@@ -64,7 +63,7 @@ public class EnableComponent extends AbstractServerAwareMojo
 
       idcClient.sendRequest(userContext, binder);
     }
-    catch (IdcClientException ice)
+    catch (final IdcClientException ice)
     { throw new MojoExecutionException(ice.getMessage()); }
   }
 }

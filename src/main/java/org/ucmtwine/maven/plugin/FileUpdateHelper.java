@@ -27,13 +27,13 @@ public class FileUpdateHelper
     *
     *  TODO: heavily based on UpdateClasspath code, refactor/reuse for both.
     */
-   public static void replaceLine(String prefix, String newValue, File hdaFile)
+   public static void replaceLine(String prefix, final String newValue, final File hdaFile)
           throws IOException, MojoExecutionException
    {
-        File tempFile = new File("temp.hda");
+        final File tempFile = new File("temp.hda");
         
-        BufferedReader reader = new BufferedReader(new FileReader(hdaFile));
-        PrintWriter writer = new PrintWriter(new FileWriter(tempFile, false));
+        final BufferedReader reader = new BufferedReader(new FileReader(hdaFile));
+        final PrintWriter writer = new PrintWriter(new FileWriter(tempFile, false));
         String line = null;
         
         //force post prefix =
@@ -49,7 +49,7 @@ public class FileUpdateHelper
         writer.flush();
         writer.close();
         
-        File oldFile = new File(hdaFile.getName()+".old.hda");
+        final File oldFile = new File(hdaFile.getName()+".old.hda");
         
         if (oldFile.exists()) { oldFile.delete(); }
         

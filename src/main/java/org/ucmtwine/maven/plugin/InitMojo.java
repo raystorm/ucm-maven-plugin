@@ -54,7 +54,7 @@ public class InitMojo extends AbstractComponentMojo
          getLog().debug("Setting componentLocation: " + componentLocation);
       }
 
-      File componentZipFile = getComponentZipAsFile();
+      final File componentZipFile = getComponentZipAsFile();
       if ( null == componentZipFile || componentZipFile.getName().equals("${componentName}") )
       {
          componentZip = componentLocation;

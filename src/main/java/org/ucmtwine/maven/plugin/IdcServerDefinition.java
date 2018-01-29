@@ -30,19 +30,19 @@ public class IdcServerDefinition
   
   public String getId() { return id; }
 
-  public void setId(String id) { this.id = id; }
+  public void setId(final String id) { this.id = id; }
 
   public String getUrl() { return url; }
 
-  public void setUrl(String url) { this.url = url; }
+  public void setUrl(final String url) { this.url = url; }
 
   public String getUsername() { return username; }
 
-  public void setUsername(String username) { this.username = username; }
+  public void setUsername(final String username) { this.username = username; }
 
   public String getPassword() { return password; }
 
-  public void setPassword(String password) { this.password = password; }
+  public void setPassword(final String password) { this.password = password; }
 
   public AdminServerDefinition getAdminServer() 
   { 
@@ -50,6 +50,6 @@ public class IdcServerDefinition
      return adminServer; 
   }
 
-  public void setAdminServer(AdminServerDefinition adminServer)
+  public void setAdminServer(final AdminServerDefinition adminServer)
   { this.adminServer = adminServer; }
 }
