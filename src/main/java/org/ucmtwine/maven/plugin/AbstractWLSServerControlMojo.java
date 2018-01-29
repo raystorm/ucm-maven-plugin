@@ -57,8 +57,7 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
       final AdminServerDefinition adminServer = server.getAdminServer();
       
       final String protocol = "t3";
-      final Integer portInteger = Integer.valueOf(adminServer.getPort());
-      final int port = portInteger.intValue();
+      final int port = Integer.valueOf(adminServer.getPort());
       final String jndiroot = "/jndi/";
       /* AdminServer runtime itself * /
       String mserver = "weblogic.management.mbeanservers.runtime";
@@ -69,7 +68,7 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
       final JMXServiceURL serviceURL = new JMXServiceURL(protocol,
                                                    adminServer.getHostname(), 
                                                    port, jndiroot + mserver);
-      final Hashtable env = new Hashtable();
+      final Hashtable<String, String> env = new Hashtable<String, String>();
       
       String user = adminServer.getUsername();
       String pass = adminServer.getPassword();
