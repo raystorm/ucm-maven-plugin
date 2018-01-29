@@ -95,7 +95,6 @@ public class UpdateClasspath extends AbstractLibMojo
      writeClassPath(finalClassPath);
   }
 
-  @SuppressWarnings("unused")
   private String appendLibrariesToClasspath(final String classPathRoot,
                                             final StringBuilder classpath)
           throws MojoExecutionException
