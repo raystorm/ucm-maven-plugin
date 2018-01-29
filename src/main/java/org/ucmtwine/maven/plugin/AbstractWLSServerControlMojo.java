@@ -49,9 +49,9 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
    public ObjectName getService() { return service; }
 
    /* Initialize connection to the Runtime MBean Server */
-   protected void init() throws IOException, MalformedURLException, 
+   protected void init() throws MalformedURLException,
                                 MalformedObjectNameException, 
-                                MojoExecutionException, MojoFailureException 
+                                MojoExecutionException
    {
       final IdcServerDefinition server = getSelectedServer();
       final AdminServerDefinition adminServer = server.getAdminServer();
