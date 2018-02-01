@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import oracle.stellent.ridc.model.DataBinder;
 import oracle.stellent.ridc.model.DataResultSet;
