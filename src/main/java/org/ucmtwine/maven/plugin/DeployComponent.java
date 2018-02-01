@@ -94,11 +94,17 @@ public class DeployComponent extends AbstractServerAwareMojo
 
       response = idcClient.sendRequest(userContext, binder);
 
-      // 3. ENABLE COMPONENT - moved to Separate goal
-      
-      //user must manually call ucm:enable
-      
-      // 4. Restart WCC - moved to Separate goals
+      responseBinder = response.getResponseAsBinder();
+
+      /*
+       * 3. ENABLE COMPONENT - moved to Separate goal
+       *    user must manually call ucm:enable
+       *    
+       * 4. Restart WCC - moved to Separate goal
+       *    user must manually call ucm:restart
+       *    
+       * moved because not all components require enable or restart
+       */
     }
     catch (final IdcClientException ice)
     { throw new MojoExecutionException(ice.getMessage()); }

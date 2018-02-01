@@ -49,23 +49,70 @@ public class FileUpdateHelper
         writer.flush();
         writer.close();
         
-        final File oldFile = new File(hdaFile.getName()+".old.hda");
+        /* TODO: consider requiring JDK 7 and using  java.nio.file.Files#move() */
         
-        if (oldFile.exists()) { oldFile.delete(); }
+        File oldFile = new File(hdaFile.getName()+".old.hda");
         
-        if (!hdaFile.renameTo(oldFile))
-        {
-           throw new MojoExecutionException( "Unable to rename " + hdaFile.getName()
-                                           + " to " + oldFile.getName());
+        if (oldFile.exists()) 
+        { 
+           oldFile.delete();
+           try { Thread.sleep(2000); } //wait 2 seconds for delete operation 
+           catch (InterruptedException ignored) { }
+           
+           //wait 30 seconds checking, once per second for file deletion 
+           for (int i = 0; i < 30 && oldFile.exists(); ++i)
+           {
+              try { Thread.sleep(1000); } //pause 1 second before trying again 
+              catch (InterruptedException ignored) { }
+              oldFile.delete();
+           }
         }
         
-        if (!tempFile.renameTo(hdaFile))
-        {
-           throw new MojoExecutionException( "Unable to rename " + tempFile.getName()
-                                           + " to " + hdaFile.getName());
+        if (oldFile.exists()) 
+        { 
+           throw new MojoExecutionException( "Unable to remove " 
+                                           + oldFile.getName() + ".");
         }
         
-        //TODO: should I add file clean-up here?
+        rename(hdaFile, oldFile);
+        
+        rename(tempFile, hdaFile);
+        
+        //TODO: should file clean-up be added here?
      }
+   
+    /**
+     *  rename attempt to safely rename the file
+     *    adds a 30 second retry to the operation
+     *  @param origin
+     *  @param dest
+     *  @throws MojoExecutionException
+     */
+    private static void rename(File origin, File dest) throws MojoExecutionException
+    {
+       boolean renamed = false;
+       if ( !(renamed = origin.renameTo(dest)) )
+       {  
+          /*
+           * System.gc(); is usually an Anti-Pattern 
+           * TODO: Is there a better way to do this? 
+           */
+          System.gc(); //remove any lingering Java File Handles
+          
+          //keep trying for 30 seconds, once per second 
+          for (int i = 0; i < 30 && !renamed; ++i)
+          {
+             try { Thread.sleep(1000); } //pause 1 second before trying again 
+             catch (InterruptedException ignored) { }
+             renamed = origin.renameTo(dest);
+          }
+          
+          if (!renamed) //fail
+          {
+             throw new MojoExecutionException( "Unable to rename " + origin.getName()
+                                             + " to " + dest.getName());
+          }
+       }
+    }
 
 }

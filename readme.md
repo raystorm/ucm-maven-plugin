@@ -152,23 +152,27 @@ Until this is up on Maven central, you need to install into your local repositor
   mvn install:install-file -DgroupId=org.ucmtwine -DartifactId=ucm-maven-plugin -Dpackaging=jar -Dversion=1.0.0-SNAPSHOT -Dfile=ucm-maven-plugin-1.0.0-SNAPSHOT.jar -DpomFile=pom.xml
   ```
 
-Planned Features
+Related Projects
 ----------------
 
-### archetype-generate
+### Maven Archetype
 
-`mvn ucm:archetype-generate`
+A Maven Archetype exists to help quickstart projects with the plugin.
+[wcc-component-archetype](https://github.com/raystorm/wcc-component-archetype)
 
-Command to generate a simple / blank Maven-UCM-Plugin project
+
+Planned Features
+----------------
 
 ### rename
 
 `mvn ucm:rename`
 
-Command to rename a Component. (change component Name, and file/Table names to match new component Name)
+Command to rename a Component. This would change the component name and change file/table names to match new component name.
 
-*improved package/version support*
-ability to automatically add the `ComponentName` and/or `ComponentName-Version` to `featureExtentions`.
+### improved package/version support
+  
+Ability to automatically add the `ComponentName` and/or `ComponentName-Version` to `featureExtentions`.
 
 Additional Notes
 ----------------
