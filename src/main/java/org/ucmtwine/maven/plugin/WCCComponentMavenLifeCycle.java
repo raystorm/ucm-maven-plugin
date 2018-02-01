@@ -1,7 +1,5 @@
 package org.ucmtwine.maven.plugin;
 
-import java.lang.String;
-
 import org.apache.maven.AbstractMavenLifecycleParticipant;
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.execution.MavenSession;
@@ -20,12 +18,12 @@ public class WCCComponentMavenLifeCycle
    public WCCComponentMavenLifeCycle() { }
 
    @Override
-   public void afterProjectsRead(MavenSession session)
+   public void afterProjectsRead(final MavenSession session)
          throws MavenExecutionException
    { super.afterProjectsRead(session); }
 
    @Override
-   public void afterSessionStart(MavenSession session)
+   public void afterSessionStart(final MavenSession session)
          throws MavenExecutionException
    { super.afterSessionStart(session); }
 

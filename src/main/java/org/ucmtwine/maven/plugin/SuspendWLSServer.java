@@ -1,10 +1,6 @@
 package org.ucmtwine.maven.plugin;
 
 
-import java.lang.String;
-
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
@@ -22,7 +18,6 @@ public class SuspendWLSServer extends AbstractWLSServerControlMojo
    /* (non-Javadoc)
     * @see org.apache.maven.plugin.Mojo#execute()
     */
-   public void execute() throws MojoExecutionException, MojoFailureException
-   { super.suspendServer(); }
+   public void execute() { super.suspendServer(); }
 
 }

@@ -1,8 +1,8 @@
 package org.ucmtwine.maven.plugin;
 
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.Set;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.maven.plugin.MojoExecutionException;
 
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
@@ -11,15 +11,9 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import javax.naming.Context;
-
-import java.io.IOException;
 import java.net.MalformedURLException;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.python.modules.synchronize;
+import java.util.Date;
+import java.util.Hashtable;
 
 
 /**
@@ -47,38 +41,37 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
    
    public JMXConnector getConnector() { return connector; }
 
-   public void setConnector(JMXConnector connector) 
+   public void setConnector(final JMXConnector connector)
    { this.connector = connector; }
 
    public ObjectName getService() { return service; }
 
    /* Initialize connection to the Runtime MBean Server */
-   protected void init() throws IOException, MalformedURLException, 
+   protected void init() throws MalformedURLException,
                                 MalformedObjectNameException, 
-                                MojoExecutionException, MojoFailureException 
+                                MojoExecutionException
    {
-      IdcServerDefinition server = getSelectedServer();
-      AdminServerDefinition adminServer = server.getAdminServer(); 
+      final IdcServerDefinition server = getSelectedServer();
+      final AdminServerDefinition adminServer = server.getAdminServer();
       
-      String protocol = "t3";
-      Integer portInteger = Integer.valueOf(adminServer.getPort());
-      int port = portInteger.intValue();
-      String jndiroot = "/jndi/";
+      final String protocol = "t3";
+      final int port = Integer.valueOf(adminServer.getPort());
+      final String jndiroot = "/jndi/";
       /* AdminServer runtime itself * /
       String mserver = "weblogic.management.mbeanservers.runtime";
       /* Domain Control instead of server runtime */
-      String mserver = "weblogic.management.mbeanservers.domainruntime";
+      final String mserver = "weblogic.management.mbeanservers.domainruntime";
       //*/ 
             
-      JMXServiceURL serviceURL = new JMXServiceURL(protocol, 
+      final JMXServiceURL serviceURL = new JMXServiceURL(protocol,
                                                    adminServer.getHostname(), 
                                                    port, jndiroot + mserver);
-      Hashtable env = new Hashtable();
+      final Hashtable<String, String> env = new Hashtable<String, String>();
       
       String user = adminServer.getUsername();
-      String pass = adminServer.getPassword();      
+      String pass = adminServer.getPassword();
       if (null == user) { user = server.getUsername(); }
-      if (null == pass) { user = server.getPassword(); }
+      if (null == pass) { pass = server.getPassword(); }
       
       env.put(Context.SECURITY_PRINCIPAL, user);
       env.put(Context.SECURITY_CREDENTIALS, pass);
@@ -87,16 +80,16 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
       
       getLog().info("connecting to WLS server.");
       try { connector = JMXConnectorFactory.connect(serviceURL, env); }
-      catch(Throwable e)
+      catch(final Throwable e)
       {
-         String msg = "Unable to create WLS connector.";
+         final String msg = "Unable to create WLS connector.";
          getLog().error(msg, e);
          throw new MojoExecutionException(msg, e);
       }
       try { connection = connector.getMBeanServerConnection(); }
-      catch(Throwable e)
+      catch(final Throwable e)
       {
-         String msg = "Unable to create WLS connection.";
+         final String msg = "Unable to create WLS connection.";
          getLog().error(msg, e);
          throw new MojoExecutionException(msg, e);
       }
@@ -130,7 +123,7 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
    { return (String) connection.getAttribute(service, "State"); }
    
    /** Helper method to simplify calling the services */
-   private void invokeService(String serviceName) throws Exception
+   private void invokeService(final String serviceName) throws Exception
    { connection.invoke(service, serviceName, new Object[] {}, new String[] {}); }
         
    public void getRuntimeInfo() 
@@ -139,10 +132,10 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
       try 
       {
          init();
-         String state = getCurrentState();
+         final String state = getCurrentState();
          getLog().info("Server state: " + state);
       } 
-      catch(Exception e) { getLog().error("issue getting runtime info", e); }
+      catch(final Exception e) { getLog().error("issue getting runtime info", e); }
    }
         
    public void suspendServer() 
@@ -152,10 +145,10 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
       {
          init();
          invokeService("suspend");
-         String state = getCurrentState();
+         final String state = getCurrentState();
          getLog().info("Server state: " + state);
       } 
-      catch(Exception e) { getLog().error("issue suspending server", e); }
+      catch(final Exception e) { getLog().error("issue suspending server", e); }
    }
         
    public void resumeServer() 
@@ -165,10 +158,10 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
       {
          init();
          invokeService("resume");
-         String state = getCurrentState();
+         final String state = getCurrentState();
          getLog().info("Server state: " + state);
       } 
-      catch(Exception e) { getLog().error("issue resuming.", e); }
+      catch(final Exception e) { getLog().error("issue resuming.", e); }
    }
         
    public void stopServer() 
@@ -178,10 +171,10 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
       {
           init();
           invokeService("forceShutdown");
-          String state = getCurrentState();
+          final String state = getCurrentState();
           getLog().info("Server state: " + state);
       } 
-      catch(Exception e) { getLog().error("issue shutting down", e); }
+      catch(final Exception e) { getLog().error("issue shutting down", e); }
    }
         
    public void startServer() 
@@ -191,10 +184,10 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
       { 
          init();
          invokeService("start");
-         String state = getCurrentState();
+         final String state = getCurrentState();
          getLog().info("Server state: " + state);
       } 
-      catch(Exception e) { getLog().error("issue starting", e); }
+      catch(final Exception e) { getLog().error("issue starting", e); }
    }
    
    public void restartServer() 
@@ -249,11 +242,11 @@ public abstract class AbstractWLSServerControlMojo extends AbstractServerAwareMo
          }
          if ( !"RUNNING".equals(state) )
          {
-            String msg = "Timeout reached while waiting for WCC restart!";
+            final String msg = "Timeout reached while waiting for WCC restart!";
             throw new MojoExecutionException(msg);
          }
       }
-      catch(Exception e) { getLog().error("issue starting", e); }
+      catch(final Exception e) { getLog().error("issue starting", e); }
    }
    
 }

@@ -1,17 +1,9 @@
 package org.ucmtwine.maven.plugin;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FilenameFilter;
-import java.io.IOException;
-
 import oracle.stellent.ridc.model.DataBinder;
 import oracle.stellent.ridc.model.DataResultSet;
 import oracle.stellent.ridc.model.impl.DataFactoryImpl;
 import oracle.stellent.ridc.model.serialize.HdaBinderSerializer;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.maven.execution.MavenSession;
@@ -21,6 +13,13 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
 
 /**
  * Extend this if you need your goal to be aware
@@ -144,7 +143,7 @@ abstract class AbstractComponentMojo extends AbstractMojo
     if ( null == componentName || "".equals(componentName.trim()) )
     {
       // 2. manifest.hda ((Optionally) -> ComponentName.hda) -> ComponentName=XXXX
-      File file = new File(manifestFileName);
+      final File file = new File(manifestFileName);
       
       componentName = processHDAFile(file);
       getLog().debug("ComponentName is: " + componentName);
@@ -162,17 +161,17 @@ abstract class AbstractComponentMojo extends AbstractMojo
       // 3. first non manifest.hda file
 
       // find all .hda files in base folder
-      FilenameFilter filter =
+      final FilenameFilter filter =
               new FilenameFilter()
                   {
-                     public boolean accept(File folder, String name)
+                     public boolean accept(final File folder, final String name)
                      {
                         return name.endsWith(".hda")
                             && !name.equals(manifestFileName);
                      }
                   };
 
-      File files[] = baseDir.listFiles(filter);
+      final File[] files = baseDir.listFiles(filter);
 
       //TODO: iterate through and confirm that the .hda is in fact a component hda.
 
@@ -185,7 +184,7 @@ abstract class AbstractComponentMojo extends AbstractMojo
     }
   }
   
-  private String processHDAFile(File file)
+  private String processHDAFile(final File file)
   {
      getLog().debug("processing hda file: " + file.getAbsolutePath());
 
@@ -218,13 +217,13 @@ abstract class AbstractComponentMojo extends AbstractMojo
          
          if ( line.equals("component") ) //next line is the path to the glue file 
          {
-            String componentHDAPath = br.readLine();
+            final String componentHDAPath = br.readLine();
             getLog().debug("glue file path:" + componentHDAPath); 
             File glueFile = new File(componentHDAPath);
             
             if ( !glueFile.exists() )
             {  
-               File prefixedGlueFile = 
+               final File prefixedGlueFile =
                             new File("component"+File.separator+glueFile.getPath());
                
                if ( !prefixedGlueFile.exists() )
@@ -254,12 +253,14 @@ abstract class AbstractComponentMojo extends AbstractMojo
          }
        }
      }
-     catch (FileNotFoundException fne)
+     catch (final FileNotFoundException fne)
      { getLog().error("Unable to find the " + file.getPath(), fne); }
-     catch (IOException ioe)
+     catch (final IOException ioe)
      { getLog().error("Error opening the " + file.getPath() + " file.", ioe); }
      finally
-     { if (br != null) { try { br.close(); } catch (IOException ingored) {} } }
+     { if (br != null) { try { br.close(); } catch (final IOException ignored) {
+       // empty catch
+     } } }
      
      return null; //not found
   }
@@ -272,12 +273,12 @@ abstract class AbstractComponentMojo extends AbstractMojo
    * @return
    * @throws MojoExecutionException
    */
-   protected DataResultSet getResultSetFromHda(File manifestFile, String rsName)
+   protected DataResultSet getResultSetFromHda(final File manifestFile, final String rsName)
              throws MojoExecutionException
    {
-      DataBinder manifest = getBinderFromHda(manifestFile);
+      final DataBinder manifest = getBinderFromHda(manifestFile);
    
-      DataResultSet manifestRs = manifest.getResultSet(rsName);
+      final DataResultSet manifestRs = manifest.getResultSet(rsName);
    
       if (manifestRs == null)
       {
@@ -295,20 +296,17 @@ abstract class AbstractComponentMojo extends AbstractMojo
    * @return
    * @throws MojoExecutionException
    */
-  private DataBinder getBinderFromHda(File manifestFile) throws MojoExecutionException
+  private DataBinder getBinderFromHda(final File manifestFile) throws MojoExecutionException
   {
     if (manifestFile == null || !manifestFile.exists())
     { throw new MojoExecutionException("File "+manifestFile+" does not exist"); }
 
     // TODO: fix hard coded encoding
-    HdaBinderSerializer serializer = new HdaBinderSerializer("UTF-8", new DataFactoryImpl());
-    DataBinder binder = null;
+    final HdaBinderSerializer serializer = new HdaBinderSerializer("UTF-8", new DataFactoryImpl());
 
-    try { binder = serializer.parseBinder(new FileReader(manifestFile)); }
-    catch (Exception e)
+    try { return serializer.parseBinder(new FileReader(manifestFile)); }
+    catch (final Exception e)
     { throw new MojoExecutionException("Error opening" + manifestFile, e); }
-
-    return binder;
   }
 
 }

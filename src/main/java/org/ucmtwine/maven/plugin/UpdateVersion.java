@@ -1,5 +1,17 @@
 package org.ucmtwine.maven.plugin;
 
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+
 import static org.twdata.maven.mojoexecutor.MojoExecutor.configuration;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.element;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.executeMojo;
@@ -8,23 +20,6 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.goal;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.name;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
 import static org.ucmtwine.maven.plugin.FileUpdateHelper.replaceLine;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Properties;
-
-import org.apache.maven.execution.MavenSession;
-import org.apache.maven.plugin.BuildPluginManager;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Component;
-import org.apache.maven.plugins.annotations.Execute;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.plugins.annotations.ResolutionScope;
 
 /**
  *    Increments the Maven Version Number 
@@ -56,8 +51,7 @@ public class UpdateVersion extends AbstractComponentMojo
    *  Update manifest.hda "CreateDate" w/ timestamp
    *         (Format "M/d/yy h:mm aa" (EG: 5/2/16 2:16 PM) )
    */
-  public void execute() throws MojoExecutionException, MojoFailureException
-  {
+  public void execute() throws MojoExecutionException {
      // find componentName
      determineComponentName();
      
@@ -68,13 +62,13 @@ public class UpdateVersion extends AbstractComponentMojo
                  executionEnvironment(project, session, pluginManager));
      // @formatter:on
      
-     Properties props = project.getProperties();
-     StringBuilder verbuilder = new StringBuilder(4);
+     final Properties props = project.getProperties();
+     final StringBuilder verbuilder = new StringBuilder(4);
      verbuilder.append(props.getProperty("parsedVersion.majorVersion")).append(".")
                .append(props.getProperty("parsedVersion.minorVersion")).append(".")
                .append(props.getProperty("parsedVersion.nextIncrementalVersion"))
                .append("-").append(props.getProperty("parsedVersion.qualifier"));
-    String nextVersion = verbuilder.toString(); 
+    final String nextVersion = verbuilder.toString();
      
      /* increment current version in pom */
      // @formatter:off
@@ -94,17 +88,17 @@ public class UpdateVersion extends AbstractComponentMojo
      version = nextVersion.replace(".", "_");
      getLog().info("Synchronizing version to: " + version);
 
-     File componentHDA = new File(componentName+".hda");
+     final File componentHDA = new File(componentName+".hda");
      
      try { replaceLine("version", version, componentHDA); }
-     catch(IOException ioe)
+     catch(final IOException ioe)
      { getLog().warn("Error Updating Component Version.", ioe); }
      
-     File manifest = getManifestFile();
-     SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy h:mm aa");
-     String createDate = sdf.format(new Date());
+     final File manifest = getManifestFile();
+     final SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy h:mm aa");
+     final String createDate = sdf.format(new Date());
      try { replaceLine("CreateDate", createDate, manifest); }
-     catch(IOException ioe)
+     catch(final IOException ioe)
      { getLog().warn("Error Updating Component Create Date.", ioe); }
   }
   

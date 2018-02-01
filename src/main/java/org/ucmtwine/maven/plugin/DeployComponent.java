@@ -16,22 +16,17 @@ package org.ucmtwine.maven.plugin;
  * limitations under the License.
  */
 
-import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
-
-import java.io.File;
-import java.io.IOException;
-
 import oracle.stellent.ridc.IdcClient;
 import oracle.stellent.ridc.IdcClientException;
 import oracle.stellent.ridc.IdcClientManager;
 import oracle.stellent.ridc.IdcContext;
 import oracle.stellent.ridc.model.DataBinder;
 import oracle.stellent.ridc.protocol.ServiceResponse;
-
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Execute;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
+
+import java.io.File;
+import java.io.IOException;
 
 /** Deploy a component to a server */
 @Mojo(name = "deploy" )
@@ -41,9 +36,9 @@ public class DeployComponent extends AbstractServerAwareMojo
 
   public void execute() throws MojoExecutionException
   {
-    IdcServerDefinition server = getSelectedServer();
+    final IdcServerDefinition server = getSelectedServer();
     
-    File componentZipFile = getComponentZipAsFile();
+    final File componentZipFile = getComponentZipAsFile();
 
     if (componentZipFile == null)
     {
@@ -60,17 +55,16 @@ public class DeployComponent extends AbstractServerAwareMojo
     getLog().info("Deploying component " + componentName + " to " + server.getId()
                  +" from zip: " + componentZipFile);
 
-    IdcClientManager manager = new IdcClientManager();
+    final IdcClientManager manager = new IdcClientManager();
 
     try
     {
-      @SuppressWarnings("rawtypes")
-      IdcClient idcClient = manager.createClient(server.getUrl());
+      @SuppressWarnings("rawtypes") final IdcClient idcClient = manager.createClient(server.getUrl());
 
-      IdcContext userContext = new IdcContext(server.getUsername(), 
-                                              server.getPassword());
+      final IdcContext userContext = new IdcContext(server.getUsername(),
+                                              server.getPassword().toCharArray());
 
-      DataBinder binder = idcClient.createBinder();
+      final DataBinder binder = idcClient.createBinder();
 
       // 1. GET_COMPONENT_INSTALL_FORM
 
@@ -78,7 +72,7 @@ public class DeployComponent extends AbstractServerAwareMojo
       binder.putLocal("IDC_Id", server.getId());
 
       try { binder.addFile("ComponentZipFile", componentZipFile); }
-      catch (IOException ioe)
+      catch (final IOException ioe)
       {
         throw new MojoExecutionException( "Error reading zip file: " 
                                         + componentZipFile, ioe);
@@ -112,7 +106,7 @@ public class DeployComponent extends AbstractServerAwareMojo
        * moved because not all components require enable or restart
        */
     }
-    catch (IdcClientException ice)
+    catch (final IdcClientException ice)
     { throw new MojoExecutionException(ice.getMessage()); }
   }
 }

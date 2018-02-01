@@ -1,21 +1,10 @@
 package org.ucmtwine.maven.plugin;
 
-import static org.twdata.maven.mojoexecutor.MojoExecutor.configuration;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.element;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.executeMojo;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.executionEnvironment;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.goal;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.name;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
-
-import java.io.File;
-import java.lang.String;
-
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
+
+import java.io.File;
 
 /**
  *  Initialization Mojo for ensuring that necessary config properties are set.
@@ -34,8 +23,7 @@ public class InitMojo extends AbstractComponentMojo
    /* (non-Javadoc)
     * @see org.apache.maven.plugin.Mojo#execute()
     */
-   public void execute() throws MojoExecutionException, MojoFailureException
-   {
+   public void execute() throws MojoExecutionException {
       getLog().debug("Initializing Ucm-Maven-Plugin");
 
       determineComponentName();
@@ -64,7 +52,7 @@ public class InitMojo extends AbstractComponentMojo
          getLog().debug("Setting componentLocation: " + componentLocation);
       }
 
-      File componentZipFile = getComponentZipAsFile();
+      final File componentZipFile = getComponentZipAsFile();
       if ( null == componentZipFile || componentZipFile.getName().equals("${componentName}") )
       {
          componentZip = componentLocation;

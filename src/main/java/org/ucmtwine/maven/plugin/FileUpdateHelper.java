@@ -1,14 +1,13 @@
 package org.ucmtwine.maven.plugin;
 
+import org.apache.maven.plugin.MojoExecutionException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.String;
-
-import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  *  Helper class to contain the file hda file update method
@@ -28,14 +27,14 @@ public class FileUpdateHelper
     *
     *  TODO: heavily based on UpdateClasspath code, refactor/reuse for both.
     */
-   public static void replaceLine(String prefix, String newValue, File hdaFile)
+   public static void replaceLine(String prefix, final String newValue, final File hdaFile)
           throws IOException, MojoExecutionException
    {
-        File tempFile = new File("temp.hda");
+        final File tempFile = new File("temp.hda");
         
-        BufferedReader reader = new BufferedReader(new FileReader(hdaFile));
-        PrintWriter writer = new PrintWriter(new FileWriter(tempFile, false));
-        String line = null;
+        final BufferedReader reader = new BufferedReader(new FileReader(hdaFile));
+        final PrintWriter writer = new PrintWriter(new FileWriter(tempFile, false));
+        String line;
         
         //force post prefix =
         if ( !prefix.endsWith("=") ) { prefix = prefix+"="; }
@@ -49,9 +48,6 @@ public class FileUpdateHelper
         reader.close();
         writer.flush();
         writer.close();
-        
-        reader = null;
-        writer = null;
         
         /* TODO: consider requiring JDK 7 and using  java.nio.file.Files#move() */
         

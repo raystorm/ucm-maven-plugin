@@ -3,20 +3,20 @@ package org.ucmtwine.maven.plugin;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- *  Stops WCC as a Managed Server
+ *  Restarts WCC as a Managed Server
  *  @author txburton
  *  @version Nov 18, 2016
  */
-@Mojo(name = "stop" )
-public class StopWLSServer extends AbstractWLSServerControlMojo
+@Mojo(name = "restart" )
+public class RestartWLSServer extends AbstractWLSServerControlMojo
 {
 
    /** Default Constructor - Does Nothing */
-   public StopWLSServer() { }
+   public RestartWLSServer() { }
 
    /* (non-Javadoc)
     * @see org.apache.maven.plugin.Mojo#execute()
     */
-   public void execute() { super.stopServer(); }
+   public void execute() { super.restartServer(); }
 
 }
