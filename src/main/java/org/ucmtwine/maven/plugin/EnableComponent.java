@@ -55,11 +55,11 @@ public class EnableComponent extends AbstractServerAwareMojo
 
       // ENABLE COMPONENT  ADMIN_TOGGLE_COMPONENTS
       
-      binder.putLocal("IdcService", "ADMIN_TOGGLE_COMPONENTS");
-      binder.putLocal("isEnable",   "1");
+      binder.putLocal(StringConstants.IDC_SERVICE, StringConstants.ADMIN_TOGGLE_COMPONENTS);
+      binder.putLocal(StringConstants.IS_ENABLE,   "1");
       
-      binder.putLocal("IDC_Id", server.getAdminServer().getWlsServerName());
-      binder.putLocal("ComponentNames", componentName);
+      binder.putLocal(StringConstants.IDC_ID, server.getAdminServer().getWlsServerName());
+      binder.putLocal(StringConstants.COMPONENT_NAMES, componentName);
 
       idcClient.sendRequest(userContext, binder);
     }

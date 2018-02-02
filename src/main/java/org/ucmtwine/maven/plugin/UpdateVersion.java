@@ -31,7 +31,7 @@ import static org.ucmtwine.maven.plugin.FileUpdateHelper.replaceLine;
  *    
  *    @author txburton
  */
-@Mojo(name = "update-version", 
+@Mojo(name = StringConstants.UPDATE_VERSION,
       defaultPhase = LifecyclePhase.PROCESS_RESOURCES,
       requiresDependencyResolution = ResolutionScope.COMPILE)
 //@Execute(goal = "compile", phase = LifecyclePhase.COMPILE)

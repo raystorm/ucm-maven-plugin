@@ -7,7 +7,7 @@ import org.apache.maven.plugins.annotations.Mojo;
  *  @author txburton
  *  @version Nov 18, 2016
  */
-@Mojo(name = "start" )
+@Mojo(name = StringConstants.START)
 public class StartWLSServer extends AbstractWLSServerControlMojo
 {
 

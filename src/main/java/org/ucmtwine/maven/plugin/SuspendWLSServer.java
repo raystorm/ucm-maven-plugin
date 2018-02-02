@@ -8,7 +8,7 @@ import org.apache.maven.plugins.annotations.Mojo;
  *  @author txburton
  *  @version Nov 18, 2016
  */
-@Mojo(name = "suspend" )
+@Mojo(name = StringConstants.SUSPEND)
 public class SuspendWLSServer extends AbstractWLSServerControlMojo
 {
 

@@ -73,14 +73,14 @@ public class UpdateClasspath extends AbstractLibMojo
      { classPathRoot = classPathRoot.substring(0, classPathRoot.length() - 2); }
 
      //add Classes Directory from Manifest.hda
-     final DataResultSet manifestRs = getResultSetFromHda(getManifestFile(), "Manifest");
+     final DataResultSet manifestRs = getResultSetFromHda(getManifestFile(), StringConstants.MANIFEST);
 
      for ( final DataObject row : manifestRs.getRows() )
      {
-        final String entryType = row.get("entryType");
-        if ( "componentClasses".equals(entryType) )
+        final String entryType = row.get(StringConstants.ENTRY_TYPE);
+        if ( StringConstants.COMPONENT_CLASSES.equals(entryType) )
         {
-           String dir = row.get("location");
+           String dir = row.get(StringConstants.LOCATION);
            if ( dir.startsWith(componentName) )
            { dir = dir.substring(componentName.length() + 1); }
            if ( dir.charAt(0) == '/' ) { dir = dir.substring(1); }
@@ -112,18 +112,18 @@ public class UpdateClasspath extends AbstractLibMojo
          plugin("org.apache.maven.plugins", "maven-dependency-plugin", "2.10"),
          goal("build-classpath"),
          configuration(
-             element(name("prefix"),         classPathRoot),
-             element(name("fileSeparator"),  "/"),
-             element(name("pathSeparator"),  getSeparator()),
-             element(name("includeScope"),   includeScope),
-             element(name("excludeScope"),   excludeScope),
-             element(name("outputProperty"), "componentClassPath")
+             element(name(StringConstants.PREFIX),         classPathRoot),
+             element(name(StringConstants.FILE_SEPARATOR),  "/"),
+             element(name(StringConstants.PATH_SEPARATOR),  getSeparator()),
+             element(name(StringConstants.INCLUDE_SCOPE),   includeScope),
+             element(name(StringConstants.EXCLUDE_SCOPE),   excludeScope),
+             element(name(StringConstants.OUTPUT_PROPERTY), StringConstants.COMPONENT_CLASS_PATH)
          ),
          executionEnvironment(project, session, pluginManager));
      // @formatter:on
 
      final String mojoClassPath = project.getProperties()
-                                   .getProperty("componentClassPath");
+                                   .getProperty(StringConstants.COMPONENT_CLASS_PATH);
 
      if (mojoClassPath != null) { classpath.append(mojoClassPath); }
 
@@ -140,7 +140,7 @@ public class UpdateClasspath extends AbstractLibMojo
   {
     getLog().info("New classpath: " + classpath);
 
-    final File hdaFile = new File(componentName + ".hda");
+    final File hdaFile = new File(componentName + StringConstants.DOT_HDA);
 
     if (!hdaFile.exists())
     { throw new MojoExecutionException("Hda file does not exist: " + hdaFile.toString()); }
@@ -166,7 +166,7 @@ public class UpdateClasspath extends AbstractLibMojo
   {
     final SortedSet<String> items = new TreeSet<String>();
 
-    final File componentHda = new File(componentName + ".hda");
+    final File componentHda = new File(componentName + StringConstants.DOT_HDA);
 
     if (!componentHda.exists())
     { throw new MojoExecutionException("Missing hda: " + componentHda.getName()); }

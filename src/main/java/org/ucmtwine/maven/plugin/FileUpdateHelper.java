@@ -30,7 +30,7 @@ public class FileUpdateHelper
    public static void replaceLine(String prefix, final String newValue, final File hdaFile)
           throws IOException, MojoExecutionException
    {
-        final File tempFile = new File("temp.hda");
+        final File tempFile = new File(StringConstants.TEMP_HDA);
         
         final BufferedReader reader = new BufferedReader(new FileReader(hdaFile));
         final PrintWriter writer = new PrintWriter(new FileWriter(tempFile, false));
@@ -51,7 +51,7 @@ public class FileUpdateHelper
         
         /* TODO: consider requiring JDK 7 and using  java.nio.file.Files#move() */
         
-        File oldFile = new File(hdaFile.getName()+".old.hda");
+        final File oldFile = new File(hdaFile.getName() + StringConstants.OLD_HDA);
         
         if (oldFile.exists()) 
         { 

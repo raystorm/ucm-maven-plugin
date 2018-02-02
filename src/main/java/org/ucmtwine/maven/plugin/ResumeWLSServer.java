@@ -8,7 +8,7 @@ import org.apache.maven.plugins.annotations.Mojo;
  *  @author txburton
  *  @version Nov 18, 2016
  */
-@Mojo(name = "resume" )
+@Mojo(name = StringConstants.RESUME)
 public class ResumeWLSServer extends AbstractWLSServerControlMojo
 {
 

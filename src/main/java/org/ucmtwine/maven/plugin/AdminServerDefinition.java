@@ -7,16 +7,16 @@ import org.apache.maven.plugins.annotations.Parameter;
  */
 public class AdminServerDefinition 
 {
-   /** Port the Adminserver runs on */
-   @Parameter(defaultValue = "7001")
+  /** Port the Adminserver runs on */
+   @Parameter(defaultValue = StringConstants.STR_7001)
    private String port;
 
    /** hostname for the adminserver */
-   @Parameter(defaultValue = "localhost")
+   @Parameter(defaultValue = StringConstants.LOCALHOST)
    private String hostname;
 
-   /** webLogic Managed Server name */
-   @Parameter(defaultValue = "adminserver")
+   /** WLS Managed Server name */
+   @Parameter(defaultValue = StringConstants.ADMINSERVER)
    private String serverName;
    
   /** WLS username - defaults to WCC value */
@@ -26,13 +26,13 @@ public class AdminServerDefinition
   @Parameter(defaultValue = "${servers[0].password}") private String password;
   
   /** Name of the UCM instance as deployed into WLS */
-  @Parameter(defaultValue = "ucm") private String wlsServerName;
+  @Parameter(defaultValue = StringConstants.UCM) private String wlsServerName;
   
   private IdcServerDefinition parent;
 
   public String getPort() 
   {
-     if ( null == port ) { port = "7001"; }
+     if ( null == port ) { port = StringConstants.STR_7001; }
      return port; 
   }
 
@@ -40,7 +40,7 @@ public class AdminServerDefinition
 
   public String getHostname() 
   {
-     if (null == hostname) { hostname = "localhost"; }
+     if (null == hostname) { hostname = StringConstants.LOCALHOST; }
      return hostname; 
   }
   
@@ -48,7 +48,7 @@ public class AdminServerDefinition
 
   public String getServerName() 
   {
-     if ( null == serverName ) { serverName = "adminserver"; }
+     if ( null == serverName ) { serverName = StringConstants.ADMINSERVER; }
      return serverName; 
   }
 
@@ -72,7 +72,7 @@ public class AdminServerDefinition
 
   public String getWlsServerName() 
   { 
-     if ( null == wlsServerName ) { wlsServerName = "ucm"; }
+     if ( null == wlsServerName ) { wlsServerName = StringConstants.UCM; }
      return wlsServerName; 
   }
 
