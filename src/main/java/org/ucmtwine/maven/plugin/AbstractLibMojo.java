@@ -17,7 +17,7 @@ abstract class AbstractLibMojo extends AbstractComponentMojo
    * //@parameter default-value="provided"
    * @required
    */
-  @Parameter(defaultValue="provided")
+  @Parameter(defaultValue= StringConstants.PROVIDED)
   protected String excludeScope;
 
   /**
@@ -26,7 +26,7 @@ abstract class AbstractLibMojo extends AbstractComponentMojo
    * //@parameter default-value="runtime"
    * @required
    */
-  @Parameter(defaultValue="runtime")
+  @Parameter(defaultValue= StringConstants.RUNTIME)
   protected String includeScope;
 
 }

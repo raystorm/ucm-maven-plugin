@@ -68,10 +68,10 @@ public class DeployComponent extends AbstractServerAwareMojo
 
       // 1. GET_COMPONENT_INSTALL_FORM
 
-      binder.putLocal("IdcService", "GET_COMPONENT_INSTALL_FORM");
-      binder.putLocal("IDC_Id", server.getId());
+      binder.putLocal(StringConstants.IDC_SERVICE, StringConstants.GET_COMPONENT_INSTALL_FORM);
+      binder.putLocal(StringConstants.IDC_ID, server.getId());
 
-      try { binder.addFile("ComponentZipFile", componentZipFile); }
+      try { binder.addFile(StringConstants.COMPONENT_ZIP_FILE, componentZipFile); }
       catch (final IOException ioe)
       {
         throw new MojoExecutionException( "Error reading zip file: " 
@@ -85,12 +85,13 @@ public class DeployComponent extends AbstractServerAwareMojo
       // 2. UPLOAD_NEW_COMPONENT
 
       // pass through component location and name to next service
-      binder.putLocal("IdcService",    "UPLOAD_NEW_COMPONENT");
-      binder.putLocal("ComponentName", responseBinder.getLocal("ComponentName"));
-      binder.putLocal("location",      responseBinder.getLocal("location"));
-      // needed for 11g
-      binder.putLocal("componentDir",  responseBinder.getLocal("componentDir"));
-      binder.removeFile("ComponentZipFile");
+      binder.putLocal(StringConstants.IDC_SERVICE, StringConstants.UPLOAD_NEW_COMPONENT);
+      binder.putLocal(StringConstants.COMPONENT_NAME, responseBinder.getLocal(StringConstants.COMPONENT_NAME));
+      binder.putLocal(StringConstants.LOCATION,      responseBinder.getLocal(StringConstants.LOCATION));
+
+      // needed for 11g +
+      binder.putLocal(StringConstants.COMPONENT_DIR,  responseBinder.getLocal(StringConstants.COMPONENT_DIR));
+      binder.removeFile(StringConstants.COMPONENT_ZIP_FILE);
 
       response = idcClient.sendRequest(userContext, binder);
 

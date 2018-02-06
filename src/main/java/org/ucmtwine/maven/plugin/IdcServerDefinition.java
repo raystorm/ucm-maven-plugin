@@ -13,15 +13,15 @@ public class IdcServerDefinition
   private String id;
 
   /** UCM url and (idc) port e.g. idc://localhost:4444 */
-  @Parameter(defaultValue = "idc://localhost:4444")
+  @Parameter(defaultValue = StringConstants.IDC_LOCALHOST_4444)
   private String url;
 
   /** UCM username */
-  @Parameter(defaultValue = "sysadmin")
+  @Parameter(defaultValue = StringConstants.SYSADMIN)
   private String username;
 
   /** UCM user's password */
-  @Parameter(defaultValue = "idc")
+  @Parameter(defaultValue = StringConstants.IDC)
   private String password;
 
   /** Admin Server info */

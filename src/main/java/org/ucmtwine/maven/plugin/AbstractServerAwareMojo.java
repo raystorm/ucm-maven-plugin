@@ -13,11 +13,11 @@ public abstract class AbstractServerAwareMojo extends AbstractComponentMojo
 {
 
   /** Content server definitions  */
-  @Parameter(property = "servers", required = true)
+  @Parameter(property = StringConstants.SERVERS, required = true)
   protected List<IdcServerDefinition> servers;
 
   /** Chosen server when executing a deploy */
-  @Parameter(property = "server", defaultValue = "")
+  @Parameter(property = StringConstants.SERVER, defaultValue = "")
   protected String requestedServer;
 
   /**

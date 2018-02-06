@@ -17,8 +17,7 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
  *  Create the component Library directory
  *  for simplified inclusion in the final component .zip file
  */
-@Mojo(name = "lib", defaultPhase = LifecyclePhase.PREPARE_PACKAGE,
-      requiresProject = true)
+@Mojo(name = StringConstants.LIB, defaultPhase = LifecyclePhase.PREPARE_PACKAGE, requiresDependencyResolution = ResolutionScope.TEST, requiresProject = true)
 //@Execute(goal="compile", phase = LifecyclePhase.COMPILE)
 public class LibComponent extends AbstractLibMojo
 {
@@ -30,20 +29,18 @@ public class LibComponent extends AbstractLibMojo
      //String libFolder = getLibFolder();
      getLog().debug("Lib Folder: " + libFolder);
 
-     project.getProperties().setProperty("outputDirectory", libFolder);
-     getLog().debug( "Lib Folder Property: "
-                   + project.getProperties().getProperty("outputDirectory"));
+     project.getProperties().setProperty(StringConstants.OUTPUT_DIRECTORY, libFolder);
+     getLog().debug( "Lib Folder Property: " + project.getProperties().getProperty(StringConstants.OUTPUT_DIRECTORY));
      getLog().debug( "Output Folder: " + outputDirectory);
 
      executeMojo(
             plugin("org.apache.maven.plugins", "maven-dependency-plugin", "2.8"),
             goal("copy-dependencies"),
-            configuration(element(name("outputDirectory"), outputDirectory),
-                          element(name("includeScope"),    includeScope),
-                          element(name("excludeScope"),    excludeScope) //,
-                          //element(name("outputDirectory"), libFolder)
+            configuration(element(name(StringConstants.OUTPUT_DIRECTORY), outputDirectory),
+                          element(name(StringConstants.INCLUDE_SCOPE),    includeScope),
+                          element(name(StringConstants.EXCLUDE_SCOPE),    excludeScope) //,
+                          //element(name(StringConstants.OUTPUT_DIRECTORY), libFolder)
                           ),
             executionEnvironment(project, session, pluginManager));
    }
-
 }
