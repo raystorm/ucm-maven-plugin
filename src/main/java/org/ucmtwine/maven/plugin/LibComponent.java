@@ -17,8 +17,7 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
  *  Create the component Library directory
  *  for simplified inclusion in the final component .zip file
  */
-@Mojo(name = "lib", defaultPhase = LifecyclePhase.PREPARE_PACKAGE,
-      requiresProject = true)
+@Mojo(name = StringConstants.LIB, defaultPhase = LifecyclePhase.PREPARE_PACKAGE, requiresDependencyResolution = ResolutionScope.TEST, requiresProject = true)
 //@Execute(goal="compile", phase = LifecyclePhase.COMPILE)
 public class LibComponent extends AbstractLibMojo
 {

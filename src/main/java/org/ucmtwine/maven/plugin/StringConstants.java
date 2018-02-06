@@ -26,6 +26,8 @@ public class StringConstants {
   static final String STOP = "stop";
   static final String SUSPEND = "suspend";
   static final String UPDATE_VERSION = "update-version";
+  static final String LIB = "lib";
+  static final String DEPLOY = "deploy";
 
   // WCC
   static final String SYSADMIN = "sysadmin";
