@@ -10,20 +10,26 @@ Commands (Goals)
 
 `mvn ucm:build`
 
-Builds a component zip file into the default output folder. This can be overridden with <componentLocation>, or <componentFileName> to change the file name.
+Builds a component zip file into the default output folder.
+can be overridden with <componentLocation>,
+or <componentFileName> to change the file name
 
 ### deploy
 
 `mvn ucm:deploy -Dserver=dev`
 
-Builds and deploys the component zip to the server id in your configuration. If no server is specified, the first server defined is used.
+Builds and deploys the component zip to the server id in your configuration.
+If no server is specified, the first server defined is used.
 
-**Note:** Deploy does not automatically restart wcc. That is left up the user so that multiple deploys can be run-before a restart, or avoided if a restart isn't deemed necessary.
+**Note:** Deploy does not automatically restart wcc. That is left up the user
+so that multiple deploys can be run-before a restart,
+ or avoided if a restart isn't deemed necessary.
 
 
 ### WCC Server Lifecycle
 
-The plugin can query and control the basic lifecycle of WCC (when configured as a managed WLS instance with NodeManager.)
+The plugin can query and control the basic lifecycle of WCC  
+(when configured as a managed WLS instance with NodeManager.)
 
 **Goals:**  
   
@@ -44,15 +50,20 @@ Updates your component .hda classpath to reflect all maven source directories.
 
 `mvn ucm:lib`
 
-Updates your component .hda lib to reflect all maven dependencies. Defaults to using the `$COMPONENT_DIR/lib/` folder, but the lib folder can be configured with `<componentLibFolder>` config. If configured the config must match the .hda file `componentLib` setting.
+Updates your component .hda lib to reflect all maven dependencies.
+Defaults to using the `$COMPONENT_DIR/lib/` folder,
+but the lib folder can be configured with `<componentLibFolder>` config.
+If configured the config must match the .hda file `componentLib` setting.
 
-The lib files are assumed to be in the ${project.build.Directory}/lib folder. However, this is configurable with the <componentLibFolder> element.
+The lib files are assumed to be in the ${project.build.Directory}/Lib folder.
+However, this is configurable with the <componentLibFolder> element.
 
 ### update-version
 
 `mvn ucm:update-version`
 
-This will increment your maven version and set your components version to match.
+This will increment your maven version and set your components version to match 
+
 
 Configuration
 -------------
@@ -61,9 +72,14 @@ In your projects pom.xml:
 
 The plugin defines its own Lifecycle/Packaging **wcc**
 
-To take full advantage of the plugin add `<packaging>wcc</packaging>` to your *pom.xml*.
+To take full advantage of the plugin add `<packaging>wcc</packaging>`
+to your *pom.xml*.
 
-Setting that will automagically bind the plugin goals to the lifecycle, so for example `mvn package` will call `ucm:classpath`, `ucm:lib`, and `ucm:build` in order as part of the normal build process.
+Setting that will automagically bind the plugin goals to the lifecycle,
+so for example `mvn package` will call
+`ucm:classpath`, `ucm:lib`, and `ucm:build` in order as part
+of the normal build process
+
 
 ```xml
 <plugin>
@@ -95,6 +111,29 @@ Setting that will automagically bind the plugin goals to the lifecycle, so for e
     </servers>
   </configuration>
 </plugin>
+```
+
+###Alternative Configuration Method
+
+.properties files are now supported as an additional alternative configuration method.
+This allows the ability to keep usernames and passwords outside of version control.
+
+```properties
+Servers.id=server1,server2
+Servers.server1.url=http://localhost:16200/cs/idcplg
+Servers.server1.username=user
+Servers.server1.password=somePassword
+Servers.server1.adminServer.hostname=localhost
+Servers.server1.adminServer.serverName=AdminServer
+Servers.server1.adminServer.userName=adminUser
+Servers.server1.adminServer.password=adminPassword
+Servers.server1.adminServer.wlsServerName=UCM_server1
+Servers.server2.url=http://host.example.net:16200/cs/idcplg
+Servers.server2.username=user
+Servers.server2.password=somePassword
+Servers.server2.adminServer.hostname=exampleAdmin2
+Servers.server2.adminServer.serverName=AdminServer2
+Servers.server2.adminServer.wlsServerName=UCM_server1
 ```
 
 Optional parameters (defaults shown)
@@ -144,9 +183,13 @@ Until this is up on Maven central, you need to install into your local repositor
    **NOTE:** The dependency is required, when building this plugin.  
              The dependency is required/used for controlling the WCC server lifecycle.
 
-1. Download ucm-maven-plugin-1.0.0-SNAPSHOT.jar from the downloads section
-1. Download the pom.xml from github source
-1. Install with Maven
+  ```
+  mvn install:install-file -DgroupId=com.oracle.ucm -DartifactId=ridc -Dpackaging=jar -Dversion=11.1.1 -Dfile=oracle.ucm.ridc-11.1.1.jar -DgeneratePom=true
+  ```
+
+3. Download ucm-maven-plugin-1.0.0-SNAPSHOT.jar from the downloads section
+4. Download the pom.xml from github source
+5. Install with Maven
 
   ```
   mvn install:install-file -DgroupId=org.ucmtwine -DartifactId=ucm-maven-plugin -Dpackaging=jar -Dversion=1.0.0-SNAPSHOT -Dfile=ucm-maven-plugin-1.0.0-SNAPSHOT.jar -DpomFile=pom.xml
@@ -168,11 +211,16 @@ Planned Features
 
 `mvn ucm:rename`
 
-Command to rename a Component. This would change the component name and change file/table names to match new component name.
+Command to rename a Component. 
+(change component Name, and file/Table names to match new component Name)
+
 
 ### improved package/version support
   
-Ability to automatically add the `ComponentName` and/or `ComponentName-Version` to `featureExtentions`.
+Ability to automatically add the `ComponentName` and/or `ComponentName-Version` to
+`featureExtentions`.
+
+
 
 Additional Notes
 ----------------
@@ -180,3 +228,34 @@ More information about Dates along with Help and configuration information
 can be found via the `help:describe` mojo.
 
 `mvn help:describe -Dplugin=org.ucmtwine:ucm-maven-plugin -Ddetail=true`
+  
+  
+  
+  
+  
+  
+  
+-------------
+
+License (MIT)
+-------------
+
+Copyright (c) 2012 Tim Stirrat
+
+Permission is hereby granted, free of charge, to any person obtaining a copy 
+of this software and associated documentation files (the "Software"), 
+to deal in the Software without restriction, including without limitation 
+the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the Software 
+is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all 
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+OTHER DEALINGS IN THE SOFTWARE.

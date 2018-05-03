@@ -7,7 +7,7 @@
 
    <groupId>org.ucmtwine</groupId>
    <artifactId>ucm-maven-plugin</artifactId>
-   <version>0.1.2</version>
+   <version>0.1.3</version>
    <packaging>maven-plugin</packaging>
 
    <!-- TODO: should this be updated to WCC from UCM? -->
