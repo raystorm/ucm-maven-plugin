@@ -118,6 +118,9 @@ of the normal build process
 .properties files are now supported as an additional alternative configuration method.
 This allows the ability to keep usernames and passwords outside of version control.
 
+The file must be called `ucm-maven-plugin.properties` and exist in the
+project base directory.
+
 ```properties
 Servers.id=server1,server2
 Servers.server1.url=http://localhost:16200/cs/idcplg
